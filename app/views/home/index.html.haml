@@ -1,0 +1,8 @@
+/ %h1 Home
+/ - if current_user
+/   %p Welcome #{current_user.name}!
+
+/     = link_to "Sign Out", signout_path
+/ - else
+/   %p
+/     = link_to "Sign in with Google google_login", "/auth/google_login"

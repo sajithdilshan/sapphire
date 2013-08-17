@@ -1,0 +1,29 @@
+!!!
+%html
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
+    %title= content_for?(:title) ? yield(:title) : "Sapphire"
+    %meta{:content => "", :name => "description"}
+    %meta{:content => "", :name => "author"}
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application"
+    = yield(:head)
+  %body
+    %nav.navbar.navbar-static-top{"role" =>"navigation"}
+      .container
+        %div.navbar-header
+          %button.navbar-toggle{"type" => "button", "data-toggle" => "collapse", "data-target" => ".navbar-ex1-collapse"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{:href => "/"} Sapphire
+
+        
+        =render 'layouts/navigation' 
+    .container
+      = render 'layouts/messages'
+      = yield
+
+    %footer
