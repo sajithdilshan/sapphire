@@ -11,7 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130324142936) do
+ActiveRecord::Schema.define(:version => 20130818084343) do
+
+  create_table "feeditems", :force => true do |t|
+    t.string   "post_title"
+    t.datetime "post_pub_date"
+    t.string   "post_body"
+    t.string   "post_url"
+    t.integer  "feed_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "feeds", :force => true do |t|
+    t.string   "feed_name"
+    t.string   "feed_url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -23,9 +40,18 @@ ActiveRecord::Schema.define(:version => 20130324142936) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
+  create_table "userfeeds", :force => true do |t|
+    t.string   "category"
+    t.datetime "lastread"
+    t.string   "user_id"
+    t.integer  "feed_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "provider"
-    t.string   "uid"
+    t.string   "uid",           :null => false
     t.string   "name"
     t.string   "profile_pic"
     t.string   "refresh_token"

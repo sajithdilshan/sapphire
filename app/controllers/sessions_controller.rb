@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
       notice = "Signed in!"
       logger.debug "URL to redirect to: #{url}"
       # raise env["omniauth.auth"].to_yaml
-      redirect_to url
+      redirect_to userfeeds_path
     else
       raise "Failed to login"
     end

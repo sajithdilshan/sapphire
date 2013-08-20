@@ -1,0 +1,10 @@
+/ = form_for @userfeed do |f|
+/   - if @userfeed.errors.any?
+/     #error_explanation
+/       %h2= "#{pluralize(@userfeed.errors.count, "error")} prohibited this userfeed from being saved:"
+/       %ul
+/         - @userfeed.errors.full_messages.each do |msg|
+/           %li= msg
+
+/   .actions
+/     = f.submit 'Save'

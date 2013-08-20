@@ -1,5 +1,5 @@
 class AddSessionsTable < ActiveRecord::Migration
-  def change
+  def up
     create_table :sessions do |t|
       t.string :session_id, :null => false
       t.text :data
@@ -9,4 +9,11 @@ class AddSessionsTable < ActiveRecord::Migration
     add_index :sessions, :session_id
     add_index :sessions, :updated_at
   end
+
+  def down
+    remove_index :sessions, :session_id
+    remove_index :sessions, :updated_at
+    drop_table 'sessions'
+  end
+
 end

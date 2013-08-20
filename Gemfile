@@ -20,6 +20,10 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :test do
+	gem "rspec-rails"
+end
+
 gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
@@ -27,6 +31,9 @@ gem 'omniauth-google-oauth2'
 gem 'figaro'
 gem 'turbolinks'
 gem "bourbon"
+gem 'simple_form', "1.5.1"
+gem "curb"
+gem "feedzirra"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

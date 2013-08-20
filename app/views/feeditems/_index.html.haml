@@ -1,0 +1,15 @@
+%div.panel-group{"id" => "accordion"}
+
+  - if @feeditem_list.nil?
+    %p no item here
+  - else
+    - @feeditem_list.each_with_index do |feeditem, index|
+      - $item_id = feeditem.id
+      %div.panel
+        %div.panel-heading
+          %h4.panel-title
+            %a.accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#feed#{$item_id}"}
+              = feeditem.post_title
+        %div.panel-collapse.collapse{"id" => "feed#{$item_id}"}
+          %div.panel-body
+            %p= feeditem.post_body

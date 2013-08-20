@@ -1,0 +1,16 @@
+
+%div.row
+  %div.col-md-9.col-md-push-3
+    %div{"id" => "feedlistcontainer"}
+      = render partial: "feeditems/index"
+    
+
+
+  %div.col-md-3.col-md-pull-9
+    = render partial: "feeds/index"
+  
+= render partial: "feeds/new"
+
+
+
+
