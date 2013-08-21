@@ -12,12 +12,31 @@ class UserfeedsController < ApplicationController
 
   def show_feed_list
     feed_id = params[:feed_id]
-    @feeditem_list = Feeditem.get_feed_list(feed_id)
-    puts "================================================================================content"
-    @feeditem_list.first.post_title
+    @feeditem_list = Feeditem.get_feed_list(current_user.uid,feed_id)
+    @feed_id = feed_id
 
     respond_to do |format|
-      format.js   # show_rec_horses.js.erb
+      format.js   # show_feed_list.js.haml
+    end
+
+  end
+
+  def mark_feed_viewed
+    feed_id = params[:feed_id]
+    post_id = params[:post_id]
+    Unreadfeeditem.mark_as_viewed(current_user.uid, feed_id,post_id)
+    respond_to do |format|
+      # format.js   # show_feed_list.js.haml
+    end
+
+  end
+
+  def mark_feed_unread
+    feed_id = params[:feed_id]
+    post_id = params[:post_id]
+    Unreadfeeditem.mark_as_unread(current_user.uid,feed_id,post_id)
+    respond_to do |format|
+      # format.js   # show_feed_list.js.haml
     end
 
   end

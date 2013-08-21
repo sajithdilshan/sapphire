@@ -10,9 +10,11 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamp :expires
       t.timestamps
     end
+    add_index :users, :uid
   end
 
   def down
+    remove_index :users, :uid
     drop_table 'users'
   end
   

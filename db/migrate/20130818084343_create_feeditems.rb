@@ -8,9 +8,11 @@ class CreateFeeditems < ActiveRecord::Migration
       t.integer :feed_id
       t.timestamps
     end
+    add_index :feeditems, :feed_id
   end
 
   def down 
+    remove_index :feeditems, :feed_id
     drop_table 'feeditems'
   end
 end

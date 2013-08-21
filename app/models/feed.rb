@@ -1,10 +1,8 @@
-# require 'rubygems'
-# require 'feedzirra'
-
 class Feed < ActiveRecord::Base
   validates_presence_of :feed_url
   attr_accessible :feed_name, :feed_url, :lastread, :category, :userfeed_id, :id
   has_many :userfeed
+  has_many :unreadfeeditems, :dependent => :destroy
   has_many :feeditems, :dependent => :destroy
   validates_uniqueness_of :feed_url
 
@@ -12,26 +10,27 @@ class Feed < ActiveRecord::Base
     #fetching feed from remote server
     fetched_feed = Feedzirra::Feed.fetch_and_parse(f_url)
 
-    # fetch the user entry from "users" model
     user = User.find_by_uid(userid)
-
-    #create and save an entry in "userfeeds" table
     user_feed = Userfeed.create(:user_id => user.uid, :category => "default",:lastread => nil)
 
-    #creates and save feed item to "feeds" table
-    feed = Feed.create(:feed_name => fetched_feed.title, :feed_url => fetched_feed.feed_url)
-    
+    is_feed_exisits = Feed.find_by_feed_url(fetched_feed.feed_url)
+    if is_feed_exisits.nil?
+      feed = Feed.create(:feed_name => fetched_feed.title, :feed_url => fetched_feed.feed_url)
+
+      fetched_feed.entries.each do |entry|
+        f_item = Feeditem.create(:feed_id => feed.id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => entry.content, :post_url => entry.url)
+        Unreadfeeditem.create(:user_id => userid, :feed_id => feed.id, :feeditem_id => f_item.id )
+      end
+
+    else
+      feed = is_feed_exisits
+    end
+
     user_feed.feed_id = feed.id
     user_feed.save!
 
-    fetched_feed.entries.each do |entry|
-      # creates and saves an entry for each post in "feeditems" table
-      f_item = Feeditem.create(:feed_id => feed.id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => entry.content, :post_url => entry.url)
-    end
-
     
   end
-
 
   def self.getUserFeedList(userid)
     Feed.joins(:userfeed).where('userfeeds.user_id' => userid)

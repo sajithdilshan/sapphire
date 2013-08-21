@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130818084343) do
+ActiveRecord::Schema.define(:version => 20130821072644) do
 
   create_table "feeditems", :force => true do |t|
     t.string   "post_title"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 20130818084343) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  add_index "feeditems", ["feed_id"], :name => "index_feeditems_on_feed_id"
 
   create_table "feeds", :force => true do |t|
     t.string   "feed_name"
@@ -40,6 +42,17 @@ ActiveRecord::Schema.define(:version => 20130818084343) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
+  create_table "unreadfeeditems", :force => true do |t|
+    t.string   "user_id"
+    t.integer  "feed_id"
+    t.integer  "feeditem_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "unreadfeeditems", ["feed_id"], :name => "index_unreadfeeditems_on_feed_id"
+  add_index "unreadfeeditems", ["user_id"], :name => "index_unreadfeeditems_on_user_id"
+
   create_table "userfeeds", :force => true do |t|
     t.string   "category"
     t.datetime "lastread"
@@ -48,6 +61,9 @@ ActiveRecord::Schema.define(:version => 20130818084343) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "userfeeds", ["feed_id"], :name => "index_userfeeds_on_feed_id"
+  add_index "userfeeds", ["user_id"], :name => "index_userfeeds_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "provider"
@@ -60,5 +76,7 @@ ActiveRecord::Schema.define(:version => 20130818084343) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  add_index "users", ["uid"], :name => "index_users_on_uid"
 
 end
