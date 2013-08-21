@@ -12,7 +12,7 @@ class UserfeedsController < ApplicationController
 
   def show_feed_list
     feed_id = params[:feed_id]
-    @feeditem_list = Feeditem.get_feed_list(current_user.uid,feed_id)
+    @feeditem_list, @readfeeditem_list = Feeditem.get_feed_list(current_user.uid,feed_id)
     @feed_id = feed_id
 
     respond_to do |format|

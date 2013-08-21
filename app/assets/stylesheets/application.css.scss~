@@ -14,7 +14,7 @@
 
 @import "bourbon";
 @import "bootstrap";
-@import url("//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css");
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css");
 
 
 .navbar-img img{
@@ -24,23 +24,4 @@
 	vertical-align:middle;
 }
 
-.row#addfeedbutton{
-    margin: 0 auto;
-}
 
-.row#postbody{
-    padding: 15px 25px;
-}
-
-.row#posttoolbar{
-    padding: 0 25px 25px 0;
-}
-
-.panel-heading-read{
-    padding: 10px 15px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #dddddd;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-
-}

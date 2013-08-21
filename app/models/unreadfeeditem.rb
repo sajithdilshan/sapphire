@@ -2,6 +2,7 @@ class Unreadfeeditem < ActiveRecord::Base
   belongs_to :feed
   belongs_to :user
   belongs_to :feeditem
+
   
   attr_accessible :feed_id, :feeditem_id, :user_id
 
