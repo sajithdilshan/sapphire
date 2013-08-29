@@ -34,6 +34,7 @@ gem "bourbon"
 gem 'simple_form', "1.5.1"
 gem "curb"
 gem "feedzirra"
+# gem 'whenever'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

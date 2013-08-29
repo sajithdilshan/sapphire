@@ -11,8 +11,6 @@
               = feeditem.post_title
         %div.panel-collapse.collapse{"id" => "feed#{$item_id}"}
           %div.panel-body
-            .row{"id" => "postbody"}
-              %p= feeditem.post_body.html_safe
             .row{"id" => "posttoolbar"}
               %div.btn-toolbar.pull-right
                 %div.btn-group
@@ -22,6 +20,9 @@
                     %i.icon-facebook
                   %button.btn.btn-default{"type" => "default"}
                     %i.icon-twitter
+            .row{"id" => "postbody"}
+              %p= feeditem.post_body.html_safe
+            
         :javascript
           $('#panel#{$item_id}').click(function() { $.get('mark_feed_viewed',{feed_id: #{@feed_id}, post_id: #{$item_id}}); }); 
           $('#panelhead#{$item_id}').click(function() {
@@ -30,7 +31,7 @@
                
               } ) ;
           $('#btn#{$item_id}').click(function() { 
-          $('#acclink#{$item_id}').trigger('click');
+          $('#acclink#{$item_id}').collapse('hide');
               if($("#panelhead#{$item_id}").hasClass("panel-heading-read"))
                 $("#panelhead#{$item_id}").removeClass("panel-heading-read").addClass("panel-heading");; 
            });
@@ -46,9 +47,7 @@
             %a.accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#feed#{$item_id}", "id" => "acclink#{$item_id}"}
               = feeditem.post_title
         %div.panel-collapse.collapse{"id" => "feed#{$item_id}"}
-          %div.panel-body            
-            .row{"id" => "postbody"}
-              %p= feeditem.post_body.html_safe
+          %div.panel-body    
             .row{"id" => "posttoolbar"}
               %div.btn-toolbar.pull-right
                 %div.btn-group
@@ -57,7 +56,10 @@
                   %button.btn.btn-default{"type" => "default"}
                     %i.icon-facebook
                   %button.btn.btn-default{"type" => "default"}
-                    %i.icon-twitter
+                    %i.icon-twitter        
+            .row{"id" => "postbody"}
+              %p= feeditem.post_body.html_safe
+            
         :javascript
           $('#panel#{$item_id}').click(function() { $.get('mark_feed_viewed',{feed_id: #{@feed_id}, post_id: #{$item_id}}); });
           $('#panelhead#{$item_id}').click(function() {
@@ -67,7 +69,7 @@
               } ) ;
 
           $('#btn#{$item_id}').click(function() { 
-          $('#acclink#{$item_id}').trigger('click'); 
+          $('#acclink#{$item_id}').collapse('hide');
               if($("#panelhead#{$item_id}").hasClass("panel-heading-read"))
                 $("#panelhead#{$item_id}").removeClass("panel-heading-read").addClass("panel-heading");; 
           });
