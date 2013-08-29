@@ -32,6 +32,17 @@ ActiveRecord::Schema.define(:version => 20130821072644) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "readfeeditems", :force => true do |t|
+    t.string   "user_id"
+    t.integer  "feed_id"
+    t.integer  "feeditem_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "readfeeditems", ["feed_id"], :name => "index_readfeeditems_on_feed_id"
+  add_index "readfeeditems", ["user_id"], :name => "index_readfeeditems_on_user_id"
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -41,17 +52,6 @@ ActiveRecord::Schema.define(:version => 20130821072644) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
-
-  create_table "unreadfeeditems", :force => true do |t|
-    t.string   "user_id"
-    t.integer  "feed_id"
-    t.integer  "feeditem_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "unreadfeeditems", ["feed_id"], :name => "index_unreadfeeditems_on_feed_id"
-  add_index "unreadfeeditems", ["user_id"], :name => "index_unreadfeeditems_on_user_id"
 
   create_table "userfeeds", :force => true do |t|
     t.string   "category"

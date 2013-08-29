@@ -24,7 +24,7 @@ class UserfeedsController < ApplicationController
   def mark_feed_viewed
     feed_id = params[:feed_id]
     post_id = params[:post_id]
-    Unreadfeeditem.mark_as_viewed(current_user.uid, feed_id,post_id)
+    Readfeeditem.mark_as_viewed(current_user.uid, feed_id,post_id)
     respond_to do |format|
       # format.js   # show_feed_list.js.haml
     end
@@ -34,7 +34,7 @@ class UserfeedsController < ApplicationController
   def mark_feed_unread
     feed_id = params[:feed_id]
     post_id = params[:post_id]
-    Unreadfeeditem.mark_as_unread(current_user.uid,feed_id,post_id)
+    Readfeeditem.mark_as_unread(current_user.uid,feed_id,post_id)
     respond_to do |format|
       # format.js   # show_feed_list.js.haml
     end

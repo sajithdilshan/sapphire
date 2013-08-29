@@ -2,7 +2,7 @@ class Feed < ActiveRecord::Base
   validates_presence_of :feed_url
   attr_accessible :feed_name, :feed_url, :lastread, :category, :userfeed_id, :id
   has_many :userfeed
-  has_many :unreadfeeditems, :dependent => :destroy
+  has_many :readfeeditems, :dependent => :destroy
   has_many :feeditems, :dependent => :destroy
   validates_uniqueness_of :feed_url
 
@@ -40,7 +40,6 @@ class Feed < ActiveRecord::Base
 
       fetched_feed.entries.each do |entry|
         f_item = Feeditem.create(:feed_id => feed.id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => entry.content, :post_url => entry.url)
-        Unreadfeeditem.create(:user_id => userid, :feed_id => feed.id, :feeditem_id => f_item.id )
       end
 
     else
