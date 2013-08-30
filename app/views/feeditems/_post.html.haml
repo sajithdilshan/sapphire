@@ -1,4 +1,6 @@
 - $item_id = feeditem.id
+- $item_title = feeditem.post_title
+- $item_url = feeditem.post_url
 %div.panel{"id" => "panel#{$item_id}"}
   - if viewed
     %div.panel-heading-read{"id" => "panelhead#{$item_id}"}
@@ -20,9 +22,9 @@
           %div.btn-group
             = link_to "Mark as Unread", mark_feed_unread_path(:feed_id => @feed_id, :post_id => feeditem.id), :type => "button", :id => "btn#{$item_id}",:class =>"btn btn-default", remote: true
           %div.btn-group
-            %button.btn.btn-default{"type" => "default"}
+            %button.btn.btn-default{"type" => "default","onClick" => "window.open('http://www.facebook.com/share.php?u=#{$item_url}','Share on Facebook', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
               %i.icon-facebook
-            %button.btn.btn-default{"type" => "default"}
+            %button.btn.btn-default{"type" => "default","onClick" => "window.open('http://twitter.com/intent/tweet?source=tweetbutton&text=#{$item_title}&url=#{$item_url}', 'Share on Twitter', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
               %i.icon-twitter
       .row.post-body{"id" => "postbody#{$item_id}"}
         %p= feeditem.post_body.html_safe
@@ -46,5 +48,6 @@
         });
       e.preventDefault();
     });
+
 
 

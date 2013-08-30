@@ -31,7 +31,17 @@
 .post-body{
     padding: 15px 25px;
 }
-
+.post-body p{
+    font-family: 'PT Sans',"Georgia","Helvetica Neue",Arial,sans-serif;
+    line-height: 1.25em;
+    font-size: 1.25em;
+    text-align: justify;
+    color: #444;
+}
+.post-body img{
+    max-width:600px;
+    height: auto;
+}
 .row#posttoolbar{
     padding: 0 25px 25px 0;
 }
@@ -45,3 +55,25 @@
 
 }
 
+.fullScreen{
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 45px 45px 10px;
+}
+.fullScreen code{
+    font-family: 'Inconsolata', sans-serif;
+    font-size: 17px;
+}
+.fullScreen p, .fullScreen span{
+    line-height: 2em;
+    font-size: 17px;
+    font-family: 'PT Sans',"Georgia","Helvetica Neue",Arial,sans-serif;
+    font-weight: 400; 
+    text-align: justify;
+    color: #444;
+
+}
+.fullScreen img{
+    max-width: 800px;
+    height: auto;
+}
