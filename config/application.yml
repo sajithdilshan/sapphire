@@ -1,0 +1,19 @@
+# Add application configuration variables here, as shown below.
+#
+# PUSHER_APP_ID: "2954"
+# PUSHER_KEY: 7381a978f7dd7f9a1117
+# PUSHER_SECRET: abdc3b896a0ffb85d373
+# STRIPE_API_KEY: EdAvEPVEC3LuaTg5Q3z6WbDVqZlcBQ8Z
+# STRIPE_PUBLIC_KEY: pk_BRgD57O8fHja9HxduJUszhef6jCyS
+
+# OAUTH_CLIENT_ID: "279931341546.apps.googleusercontent.com"
+# OAUTH_CLIENT_SECRET: "u2vFuYelD-KXkE0xuJWHYTnx"
+
+OAUTH_CLIENT_ID: "980852777366.apps.googleusercontent.com"
+OAUTH_CLIENT_SECRET: "53bBgJMojyHKdIeE7AToM_Zg"
+
+APPLICATION_CONFIG_SECRET_TOKEN: "580d24f2f80792aa7e3f68557b77ceb6d2a6c23d5f0e22061e583b4eb38a0458f8abcb1adc2718f6beba64fb34b53c9a1308ab5448535e7180f1ca9bffeb5dab"
+HTTP_PROXY: ""
+http_proxy: ""
+# HTTP_PROXY: "http://cache.mrt.ac.lk:3128"
+# http_proxy: "http://cache.mrt.ac.lk:3128"
