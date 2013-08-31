@@ -9,6 +9,7 @@
 # OAUTH_CLIENT_ID: "279931341546.apps.googleusercontent.com"
 # OAUTH_CLIENT_SECRET: "u2vFuYelD-KXkE0xuJWHYTnx"
 
+#heroku
 OAUTH_CLIENT_ID: "980852777366.apps.googleusercontent.com"
 OAUTH_CLIENT_SECRET: "53bBgJMojyHKdIeE7AToM_Zg"
 
