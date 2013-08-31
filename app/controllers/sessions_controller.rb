@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def create
+    puts "*********************creating user******************************"
     auth = request.env["omniauth.auth"]
     user = User.where(:provider => auth["provider"], :uid => auth["uid"]).first_or_initialize(
       :refresh_token => auth["credentials"]["refresh_token"],
@@ -13,6 +14,7 @@ class SessionsController < ApplicationController
     url = root_path if url.eql?('/logout')
 
     if user.save
+      puts "*********************************saving user**************************"
       session[:user_id] = user.id
       notice = "Signed in!"
       logger.debug "URL to redirect to: #{url}"
