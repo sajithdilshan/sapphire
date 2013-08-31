@@ -33,7 +33,7 @@ end
 gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
-gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
 gem 'figaro'
 gem 'turbolinks'
 gem "bourbon"
