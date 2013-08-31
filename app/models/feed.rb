@@ -6,8 +6,10 @@ class Feed < ActiveRecord::Base
   has_many :feeditems, :dependent => :destroy
   validates_uniqueness_of :feed_url
 
-  def self.globalFeedUpdate
-    feeds = Feed.all
+  def self.userFeedUpdate(userid)
+    # puts "****************************************************************************fetching feeds************************************"
+    
+    feeds = Feed.joins(:userfeed).where('userfeeds.user_id' => userid)
     feed_id_list =[]
     feeds.entries.each do |entry|
       feed_id_list.append([entry.id,entry.feed_url])
@@ -15,11 +17,13 @@ class Feed < ActiveRecord::Base
 
     feed_id_list.each do |id, url|
        last_entry = Feeditem.where("feed_id" => id).first["post_pub_date"].to_time
-       fetched_feed = Feedzirra::Feed.fetch_and_parse(url,:if_modified_since => last_entry)
+       fetched_feed = Feedzirra::Feed.fetch_and_parse(url)
 
        unless fetched_feed.nil?
         fetched_feed.entries.each do |entry|
-          f_item = Feeditem.create(:feed_id => feed.id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => entry.content, :post_url => entry.url)
+          if entry.published.to_time > last_entry
+            f_item = Feeditem.create(:feed_id => id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => entry.content, :post_url => entry.url)
+          end
         end
       end
 
@@ -27,27 +31,38 @@ class Feed < ActiveRecord::Base
 
   end
 
+
   def self.addFeed(f_url, userid)
     #fetching feed from remote server
     fetched_feed = Feedzirra::Feed.fetch_and_parse(f_url)
+    if fetched_feed.nil?
+      return false
+    else
+      user = User.find_by_uid(userid)
+      user_feed = Userfeed.create(:user_id => user.uid, :category => "default",:lastread => nil)
 
-    user = User.find_by_uid(userid)
-    user_feed = Userfeed.create(:user_id => user.uid, :category => "default",:lastread => nil)
+      is_feed_exisits = Feed.find_by_feed_url(fetched_feed.feed_url)
+      if is_feed_exisits.nil?
+        feed = Feed.create(:feed_name => fetched_feed.title, :feed_url => fetched_feed.feed_url)
 
-    is_feed_exisits = Feed.find_by_feed_url(fetched_feed.feed_url)
-    if is_feed_exisits.nil?
-      feed = Feed.create(:feed_name => fetched_feed.title, :feed_url => fetched_feed.feed_url)
+        fetched_feed.entries.each do |entry|
+          postbody = ""
+          if entry.content.nil?
+            postbody = entry.summary
+          else
+            postbody = entry.content
+          end
+          f_item = Feeditem.create(:feed_id => feed.id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => postbody, :post_url => entry.url)
+        end
 
-      fetched_feed.entries.each do |entry|
-        f_item = Feeditem.create(:feed_id => feed.id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => entry.content, :post_url => entry.url)
+      else
+        feed = is_feed_exisits
       end
 
-    else
-      feed = is_feed_exisits
+      user_feed.feed_id = feed.id
+      user_feed.save!
     end
 
-    user_feed.feed_id = feed.id
-    user_feed.save!
 
     
   end

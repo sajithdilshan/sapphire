@@ -29,7 +29,7 @@ end
 group :test do
 	gem "rspec-rails"
 end
-
+gem 'font-awesome-sass-rails'
 gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
@@ -40,8 +40,9 @@ gem "bourbon"
 gem 'simple_form', "1.5.1"
 gem "curb"
 gem "feedzirra"
-# gem 'whenever'
-
+gem 'whenever', :require => false
+gem 'delayed_job_active_record'
+gem "daemons"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

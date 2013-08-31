@@ -49,9 +49,15 @@ class FeedsController < ApplicationController
     feed_url = @feed[:feed_url]
     userid = current_user.uid
 
-    Feed.addFeed(feed_url, userid)
+    f = Feed.addFeed(feed_url, userid)
+    if f == false
+      flash[:alert] = "Error occured while adding the feed. Please try again later."
+      redirect_to userfeeds_path
+    else
+      flash[:notice] = "Feed Added Successfully"
+      redirect_to userfeeds_path
+    end
 
-    redirect_to userfeeds_path
 
     # if @feed.save
     #   flash[:notics] = "Feed added successfully"

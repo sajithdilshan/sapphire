@@ -4,6 +4,8 @@ class Feeditem < ActiveRecord::Base
 
   attr_accessible :post_title,:post_pub_date,:post_body,:post_url, :feed_id, :id
 
+  validates_uniqueness_of :post_url, :scope => [:feed_id]
+
   def self.get_feed_list(user_id,feed_id)
     all = Feeditem.find_all_by_feed_id(feed_id)
     read_posts = Feeditem.joins(:readfeeditems).where("readfeeditems.user_id = (?) AND readfeeditems.feed_id = (?) ",user_id,feed_id).order("post_pub_date DESC")

@@ -27,7 +27,8 @@
             %button.btn.btn-default{"type" => "default","onClick" => "window.open('http://twitter.com/intent/tweet?source=tweetbutton&text=#{$item_title}&url=#{$item_url}', 'Share on Twitter', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
               %i.icon-twitter
       .row.post-body{"id" => "postbody#{$item_id}"}
-        %p= feeditem.post_body.html_safe
+        - unless feeditem.post_body.nil?
+          %p= feeditem.post_body.html_safe
     
   :javascript
     $('#acclink#{$item_id}').click(function() { $.get('mark_feed_viewed',{feed_id: #{@feed_id}, post_id: #{$item_id}}); }); 

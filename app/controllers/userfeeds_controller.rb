@@ -5,6 +5,8 @@ class UserfeedsController < ApplicationController
   def prepare_userfeed_form
     @feed = Feed.new
     @feeditems = Feed.getUserFeedList(current_user.uid)
+    # Feed.userFeedUpdate(@feeditems)
+    Delayed::Job.enqueue UpdateFeed.new(current_user.uid)
   end
   # GET /userfeeds
   # GET /userfeeds.json
