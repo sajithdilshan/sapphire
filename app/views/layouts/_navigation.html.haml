@@ -1,14 +1,26 @@
 %div.collapse.navbar-collapse.navbar-ex1-collapse
 	%ul.nav.navbar-nav
-		%li
-			%a{:href => '/'} Home
-		%li.dropdown
-			%a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-				Subscriptions
-				%b.caret
-			%ul.dropdown-menu
-				%li
-					%a{:href => '/'} Home
+		-if current_user
+			%li
+				%a{:href => '/userfeeds'} Home
+			%li.dropdown
+				%a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+					Subscriptions
+					%b.caret
+				%ul.dropdown-menu
+					%li
+						%a{:href => '/'} Home
+		-else
+			%li
+				%a{:href => '/'} Home
+			%li.dropdown
+				%a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+					Subscriptions
+					%b.caret
+				%ul.dropdown-menu
+					%li
+						%a{:href => '/'} Home
+
 	- if current_user
 		%ul.nav.navbar-nav{:class =>"pull-right"}
 			%li.dropdown

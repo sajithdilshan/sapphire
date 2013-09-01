@@ -1,0 +1,4 @@
+$(".ajax-progress").hide()
+- if !@ajax_status.nil?
+  $(".modal-body > p").text("#{@ajax_status}")
+  $("#ajax-status").modal("show");

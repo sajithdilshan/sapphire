@@ -2,17 +2,29 @@
   %button.btn.btn-primary{"type" => "button", "data-toggle" => "modal", "data-target" => "#addfeedmodel"} 
     %i.icon-plus
     New Feed
-  %br
+  %a.btn.btn-default.pull-right{"href"=> refresh_feed_list_path,"data-remote" => "true","id"=>"btn-refresh-feed"}
+    %i.icon-refresh
 %div.row
   %br
 %div.row{"id" => "addfeedbutton"}
-  %h5 Your Subscriptions
-  %div.list-group
-  - if @feeditems.nil?
-    %p No subscriptions available
-  - else
-    - @feeditems.each_with_index do |feeditem,index|
-      / %span.badge 14
-      = link_to feeditem.feed_name, show_feed_list_path(:feed_id => feeditem.id), :class =>"list-group-item", remote: true
+  %div.list-group{"id" => "listgroup"}
+    - if @feeditems.nil?
+      %p No subscriptions available
+    - else
+      - @feeditems.each_with_index do |feeditem,index|
+        = link_to feeditem.feed_name , show_feed_list_path(:feed_id => feeditem.id), :class =>"list-group-item", remote: true
+          
+
+  :javascript
+    $("#listgroup").on("click", "a:not(.active)", function ( event ) {
+      $(".active", event.delegateTarget).removeClass("active");
+      $(this).addClass("active");
+      $(".ajax-progress").show();
+    });
+    $("#btn-refresh-feed").click(function() {
+    // Show Progress Indicator
+    $(".ajax-progress").show();
+    });
+
       
   

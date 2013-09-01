@@ -8,14 +8,16 @@ class Feeditem < ActiveRecord::Base
 
   def self.get_feed_list(user_id,feed_id)
     all = Feeditem.find_all_by_feed_id(feed_id)
-    read_posts = Feeditem.joins(:readfeeditems).where("readfeeditems.user_id = (?) AND readfeeditems.feed_id = (?) ",user_id,feed_id).order("post_pub_date DESC")
+    read_posts = Feeditem.joins(:readfeeditems).where("readfeeditems.user_id = (?) AND readfeeditems.feed_id = (?) ",user_id,feed_id)
     read_posts_ids = read_posts.map{|x| x.id}
 
     unread_posts = all.reject{|x| read_posts_ids.include? x.id}
     # puts read.first.id
     # # Feeditem.find_all_by_feed_id(feed_id)
     # puts  read.first.id
-    return unread_posts, read_posts
+    unread_post = unread_posts.sort_by{|h| h.post_pub_date}.reverse!
+    read_post = read_posts.sort_by{|h| h.post_pub_date}.reverse!
+    return unread_post, read_post
   end
 
 end

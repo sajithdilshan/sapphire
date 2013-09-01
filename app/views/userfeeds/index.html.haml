@@ -4,10 +4,13 @@
       %p.pull-right.visible-xs
         %button.btn.btn-primary.btn-xs{"type" => "button", "data-toggle" => "offcanvas"}
           Toggle Sidebar
-      %div{"id" => "feedlistcontainer"}
-        = render partial: "feeditems/index"
+      %div{"id" => "masterfeedlistcontainer"}
+        %div{"id" => "feedlistcontainer"}
+          = render partial: "feeditems/index"
     %div.col-xs-6.col-sm-3.sidebar-offcanvas{"id" => "sidebar", "role" => "navigation"}
-      = render partial: "feeds/index"
+      %div{"id" => "masterfeedcontainer"}
+        %div{"id" => "feedcontainer"}
+          = render partial: "feeds/index"
 
 
 = render partial: "feeds/new"

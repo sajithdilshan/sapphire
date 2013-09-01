@@ -14,13 +14,61 @@
  */
 
 
+#feedlistcontainer,#feedcontainer{
+    height: 600px;
+    overflow:auto;
+}
+#masterfeedlistcontainer, #masterfeedcontainer{
+    height: 600px;
+}
 
+#feedcontainer{
+    overflow-x: hidden;
+}
 .navbar-img img{
 	margin-right:5px;
 	max-height:25px;
 	width:auto;
 	vertical-align:middle;
 }
+
+
+
+
+/* Set the fixed height of the footer here */
+#footercredit {
+    margin-top:10px;
+    height: 30px;
+    text-align: center;
+    color: #444;
+    bottom:0;
+}
+
+
+.ajax-progress {
+  position: fixed;
+  display:none;
+  width: 300px;
+  height: 50px;
+  top: 50%;
+  left: 25%;
+  background-image: url('ajax-loader.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+#navbar-logo{
+    padding-left: 33px;
+    background-image: url('logo.png');
+    background-repeat: no-repeat;
+    background-position:0 14px;
+    height: 50px;
+}
+
+
+
+
 
 .row#addfeedbutton{
     margin: 0 auto;
@@ -35,6 +83,11 @@
     font-size: 16px;
     text-align: justify;
     color: #444;
+}
+
+#published p{
+    font-size:14px;
+    line-height: 15px;
 }
 .post-body img{
     max-width:600px;

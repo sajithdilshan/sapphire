@@ -6,17 +6,25 @@ class UserfeedsController < ApplicationController
     @feed = Feed.new
     @feeditems = Feed.getUserFeedList(current_user.uid)
     # Feed.userFeedUpdate(@feeditems)
-    Delayed::Job.enqueue UpdateFeed.new(current_user.uid)
   end
   # GET /userfeeds
   # GET /userfeeds.json
+  def refresh_feed_list
+    Delayed::Job.enqueue UpdateFeed.new(current_user.uid)
+    @ajax_status = "Updating all feeds in the backgroung..." 
+    respond_to do |format|
+      format.js  {render 'shared/ajax-progress'}
+    end
 
+  end
 
   def show_feed_list
     feed_id = params[:feed_id]
     @feeditem_list, @readfeeditem_list = Feeditem.get_feed_list(current_user.uid,feed_id)
     @feed_id = feed_id
-
+    if @feeditem_list.nil? and @readfeeditem_list.nil?
+      @ajax_status = "Error occured while fetching post list. Please try again..."
+    end
     respond_to do |format|
       format.js   # show_feed_list.js.haml
     end

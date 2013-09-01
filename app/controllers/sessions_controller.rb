@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+
+  skip_before_filter :login_required
   def create
     puts "*********************creating user******************************"
     auth = request.env["omniauth.auth"]
@@ -19,7 +21,7 @@ class SessionsController < ApplicationController
       notice = "Signed in!"
       logger.debug "URL to redirect to: #{url}"
       # raise env["omniauth.auth"].to_yaml
-      
+      Delayed::Job.enqueue UpdateFeed.new(current_user.uid)
       redirect_to userfeeds_path
     else
       raise "Failed to login"

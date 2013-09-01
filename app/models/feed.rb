@@ -21,8 +21,14 @@ class Feed < ActiveRecord::Base
 
        unless fetched_feed.nil?
         fetched_feed.entries.each do |entry|
+          postbody = ""
+          if entry.content.nil?
+            postbody = entry.summary
+          else
+            postbody = entry.content
+          end
           if entry.published.to_time > last_entry
-            f_item = Feeditem.create(:feed_id => id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => entry.content, :post_url => entry.url)
+            f_item = Feeditem.create(:feed_id => id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => postbody, :post_url => entry.url)
           end
         end
       end
@@ -68,7 +74,7 @@ class Feed < ActiveRecord::Base
   end
 
   def self.getUserFeedList(userid)
-    Feed.joins(:userfeed).where('userfeeds.user_id' => userid)
+    Feed.joins(:userfeed).where('userfeeds.user_id' => userid).order("feed_name ASC")
   end
 
 end

@@ -1,1 +1,6 @@
-$('#feedlistcontainer').html("#{j(render("feeditems/index", :feeditem_list => @feeditem_list, :readfeeditem_list => @readfeeditem_list, :feed_id => @feed_id))}")
+$(".ajax-progress").hide()
+- if !@ajax_status.nil?
+  $(".modal-body > p").text("#{@ajax_status}")
+  $("#ajax-status").modal("show");
+- else
+  $('#feedlistcontainer').html("#{j(render("feeditems/index", :feeditem_list => @feeditem_list, :readfeeditem_list => @readfeeditem_list, :feed_id => @feed_id))}")
