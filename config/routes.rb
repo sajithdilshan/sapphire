@@ -10,4 +10,5 @@ OmniauthGoogleOauth2Example::Application.routes.draw do
   get "mark_feed_viewed", to: "userfeeds#mark_feed_viewed"
   get "mark_feed_unread", to: "userfeeds#mark_feed_unread"
   get "refresh_feed_list", to: "userfeeds#refresh_feed_list"
+  get "remove_feed", to: "userfeeds#remove_feed"
 end

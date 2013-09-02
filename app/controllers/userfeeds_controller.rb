@@ -18,6 +18,15 @@ class UserfeedsController < ApplicationController
 
   end
 
+  def remove_feed
+    @userfeed_all = Userfeed.where("user_id"=>current_user.uid)
+    @feedlist_unordered =Feed.getfeedlistUnordered(current_user.uid)
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @userfeeds }
+    end
+  end
+
   def show_feed_list
     feed_id = params[:feed_id]
     @feeditem_list, @readfeeditem_list = Feeditem.get_feed_list(current_user.uid,feed_id)
@@ -124,11 +133,11 @@ class UserfeedsController < ApplicationController
   # DELETE /userfeeds/1.json
   def destroy
     @userfeed = Userfeed.find(params[:id])
-    @userfeed.destroy
-
-    respond_to do |format|
-      format.html { redirect_to userfeeds_url }
-      format.json { head :no_content }
+    if @userfeed.destroy
+      flash[:notice] = "Feed removed successfully"
+    else
+      flash[:alert] = "An error occured while removing the feed. Please try again."
     end
+    redirect_to remove_feed_path    
   end
 end

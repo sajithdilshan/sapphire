@@ -1,13 +1,43 @@
-.row
-  .jumbotron
-    sdsd
-.row
-  .col-lg-7
-    hdschsdkjcs
-  .col-lg-5
-    jbnfjdfhdj
-.row
-  .col-lg-5
-    hdschsdkjcs
-  .col-lg-7
-    jbnfjdfhdj
+%div{"id" => "intromain"}
+  .row
+    .jumbotron{"id" => "intro"}
+      %h1 Sapphire
+      %p A RSS reader built using Ruby on Rails. Sign in to read all your feeds at one place or scroll down to learn more.
+      = link_to "Sign in with Facebook", "/auth/facebook", :class =>"btn btn-primary", "id" => "introbtn"
+  %br
+  %br
+  %br
+  %div{"id"=>"intro-center"}
+    .row
+      .col-lg-7{"id"=> "intro-feedlist"}
+        %h2 All your subscriptions at one place
+        %p Now read all your feeds from one place from anywhere on any device. After signing in, Just add your feeds and your feed list will be available on left side bar.
+      .col-lg-5{"id" => "intro-feedlist-img"}
+    %br
+    %br
+    %br
+    .row
+      .col-lg-5{"id" => "intro-postlist-img"}
+      .col-lg-7{"id" => "intro-postlist"}
+        %h2 Clutter free list of posts
+        %p Post list is displayed in a clutter free, simple accordion and by clicking on a post title, it will expand showing the content of the post.
+    %br
+    %br
+    %br
+    .row
+      .col-lg-7
+        %h2 Improved readability and many more
+        %p You can view the post in any device with improved readability and you can even read the post in full screen mode. Not only that sharing it with your friends on Facebook and Twitter is just one click away.
+      .col-lg-5{"id"=>"intro-post-img"}
+    %br
+    %br
+    %br
+    .row
+      %h2 What's next?
+      %p!= "Sapphire is still in its alpha state and has a long way to go. But the good news is you can contribute to its development to. You can view its source code on <a href='https://github.com/sajithdilshan/sapphire/', target='_blank'>Github</a> and please report any bugs, issues, or feature request using <a href='https://github.com/sajithdilshan/sapphire/issues', target='_blank'>this link.</a> And don't forget to fork me on Github."
+      %br
+      %br
+      %br
+
+
+

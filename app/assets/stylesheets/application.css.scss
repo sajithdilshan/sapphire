@@ -37,6 +37,9 @@
 
 /* Set the fixed height of the footer here */
 #footercredit {
+    font-family: 'Open Sans',"Georgia","Helvetica Neue",Arial,sans-serif;
+    font-weight:300;
+    font-size: 12px;
     margin-top:10px;
     height: 30px;
     text-align: center;
@@ -65,6 +68,89 @@
     background-position:0 14px;
     height: 50px;
 }
+
+/*    ========================================================main page*/
+#intro{
+    background-color:#fff;
+    background-image: url('main.png');
+    background-repeat: no-repeat;
+    background-position:75px 0;
+    height: 300px;
+    width: 1000px;
+}
+
+#intro-feedlist-img{
+    background-color:#fff;
+    background-image: url('feedlist.png');
+    background-repeat: no-repeat;
+    height: 300px;
+    width: 275px;
+    
+}
+#intro-postlist-img{
+    background-color:#fff;
+    background-image: url('postlist.png');
+    background-repeat: no-repeat;
+    background-position:75px 0;
+    height: 300px;
+}
+#intro-post-img{
+    background-color:#fff;
+    background-image: url('postview.png');
+    background-repeat: no-repeat;
+    background-position:50px 0;
+    height: 350px;
+}
+
+#intro p,#intro h1{
+    padding-left: 550px;
+    
+}
+#intromain p {
+    font-family: 'Open Sans',"Georgia","Helvetica Neue",Arial,sans-serif;
+    color: #444;
+    font-weight:300;
+    font-size: 16px;
+    line-height: 1.875em;
+    
+}
+#intro h1, #intromain h2{
+    font-family: 'Open Sans',"Georgia","Helvetica Neue",Arial,sans-serif;
+    color: #444;
+    font-weight:400;
+}
+#intro-center{
+    width:920px;
+    margin: 0 auto;
+}
+#intro h1{
+    font-size: 70px;
+}
+#intromain h2{
+    font-size:30px;
+}
+#introbtn{
+    margin-left: 550px;
+}
+
+
+
+
+
+
+/* end of main*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

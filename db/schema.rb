@@ -52,12 +52,14 @@ ActiveRecord::Schema.define(:version => 20130831184401) do
     t.string   "user_id"
     t.integer  "feed_id"
     t.integer  "feeditem_id"
+    t.integer  "userfeed_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
   add_index "readfeeditems", ["feed_id"], :name => "index_readfeeditems_on_feed_id"
   add_index "readfeeditems", ["user_id"], :name => "index_readfeeditems_on_user_id"
+  add_index "readfeeditems", ["userfeed_id"], :name => "index_readfeeditems_on_userfeed_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false

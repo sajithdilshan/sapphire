@@ -4,14 +4,17 @@ class CreateReadfeeditems < ActiveRecord::Migration
       t.string :user_id
       t.integer :feed_id
       t.integer :feeditem_id
+      t.integer :userfeed_id
       t.timestamps
     end
     add_index :readfeeditems, :user_id
     add_index :readfeeditems, :feed_id
+    add_index :readfeeditems, :userfeed_id
   end
   def down
     remove_index :readfeeditems, :user_id
     remove_index :readfeeditems, :feed_id
+    remove_index :readfeeditems, :userfeed_id
     drop_table 'readfeeditems'
   end
 end
