@@ -52,6 +52,11 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    factory_girl (4.2.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.2.1)
+      factory_girl (~> 4.2.0)
+      railties (>= 3.0.0)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
     feedzirra (0.0.24)
@@ -159,6 +164,10 @@ GEM
     simple_form (1.5.1)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -189,6 +198,7 @@ DEPENDENCIES
   curb
   daemons
   delayed_job_active_record
+  factory_girl_rails
   feedzirra
   figaro
   font-awesome-sass-rails
@@ -201,6 +211,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 3.2.3)
   simple_form (= 1.5.1)
+  simplecov
   sqlite3
   turbolinks
   uglifier (>= 1.0.3)

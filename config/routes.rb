@@ -1,4 +1,4 @@
-OmniauthGoogleOauth2Example::Application.routes.draw do
+Sapphire::Application.routes.draw do
   resources :feeditems
   resources :userfeeds
   resources :feeds

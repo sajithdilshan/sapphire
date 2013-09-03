@@ -28,7 +28,10 @@ end
 
 group :test do
 	gem "rspec-rails"
+  gem 'factory_girl_rails'
+  gem 'simplecov', :require => false
 end
+
 gem 'font-awesome-sass-rails'
 gem 'jquery-rails'
 gem 'haml'

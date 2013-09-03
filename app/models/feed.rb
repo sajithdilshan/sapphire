@@ -1,10 +1,11 @@
 class Feed < ActiveRecord::Base
   validates_presence_of :feed_url
   attr_accessible :feed_name, :feed_url, :lastread, :category, :userfeed_id, :id
-  has_many :userfeed
+  has_many :userfeeds, :dependent => :destroy
   has_many :readfeeditems, :dependent => :destroy
   has_many :feeditems, :dependent => :destroy
   validates_uniqueness_of :feed_url
+
 
   def self.userFeedUpdate(userid)
     puts "performing the userfeed update of " + userid
@@ -33,7 +34,7 @@ class Feed < ActiveRecord::Base
           end
           #if there are new post, they will be added to Feeditem table
           if entry.published.to_time > last_entry
-            f_item = Feeditem.create(:feed_id => id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => postbody, :post_url => entry.url)
+            Feeditem.create(:feed_id => id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => postbody, :post_url => entry.url)
           end
         end   #end of fetched_feed loop
       end   #end of unless clause
@@ -41,28 +42,36 @@ class Feed < ActiveRecord::Base
   end   #end of userfeedupdate
 
 
+  # This method adds new feeds to the application. If the feed already exists, it just creates a reference to the user.
+  #
+  # * *Args*    :
+  #   - +f_url+ -> The url of the feed. This can be a link to xml file.
+  #   - +userid+ -> The user id of the currently logged in user.
+  # * *Returns* :
+  #   - Errors if fetching feed or creation Feed table entry fail. Returns a notice if user tries to add duplicate feed. Otherwise will return a success message
+  # * *Raises* :
+  #   None
+  #
   def self.addFeed(f_url, userid)
     #fetching feed from remote server    
     fetched_feed = Feedzirra::Feed.fetch_and_parse(f_url)   
-    #error occured fetching feed
+
     if fetched_feed.nil?
-      return false
-    #after successfully fetching feed
+      return {alert: "Error occured while fetching feed. Please try again later."}
     else
       is_feed_exisits = Feed.find_by_feed_url(fetched_feed.feed_url)
       if is_feed_exisits
-        is_userfeed_exist = Userfeed.where(:user_id => userid, :feed_id => is_feed_exisits.id )
-        if !is_userfeed_exist.nil?
-          return true
+        is_userfeed_exist = Userfeed.find_by_user_id_and_feed_id(userid, is_feed_exisits.id )
+        unless is_userfeed_exist.nil?
+          return {notice: "You have already added that feed"}
         end
-      end
-      user = User.find_by_uid(userid)
-      user_feed = Userfeed.create(:user_id => user.uid, :category => "default",:lastread => nil)
+        feed = is_feed_exisits
+      else
 
-      
-      if is_feed_exisits.nil?
-        
         feed = Feed.create(:feed_name => fetched_feed.title, :feed_url => fetched_feed.feed_url)
+        if feed.nil?
+          return {alert: "Error occured while creating feed. Please try again later."}
+        end
 
         fetched_feed.entries.each do |entry|
           postbody = ""
@@ -71,16 +80,15 @@ class Feed < ActiveRecord::Base
           else
             postbody = entry.content
           end
-          f_item = Feeditem.create(:feed_id => feed.id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => postbody, :post_url => entry.url)
+          Feeditem.create(:feed_id => feed.id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => postbody, :post_url => entry.url)
         end
 
-      else
-        feed = is_feed_exisits
       end
+      
+      user = User.find_by_uid(userid)
+      Userfeed.create(:user_id => user.uid, :category => "default",:lastread => nil, :feed_id => feed.id)
 
-      user_feed.feed_id = feed.id
-      user_feed.save!
-
+      return {notice: "Feed added Successfully"}
     end   #end of fetchedfeed.nil?
   end   #end of addfeed method
 

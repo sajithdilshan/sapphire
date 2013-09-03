@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-OmniauthGoogleOauth2Example::Application.load_tasks
+Sapphire::Application.load_tasks
