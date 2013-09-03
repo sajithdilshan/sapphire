@@ -1,0 +1,14 @@
+%table{:class=> 'table table-hover'}
+  %thead
+    %tr
+      %th Feed Title
+      %th Category
+      %th Created Date
+      %th Remove
+  %tbody
+    - @userfeed_all.each_with_index do |feed,index|
+      %tr
+        %td= @feedlist_unordered[index].feed_name
+        %td= feed.category
+        %td= feed.created_at
+        %td= button_to "Remove", userfeed_path(feed), :method => :delete, :confirm => "Feed will be removed. Are you sure?", :class => "btn btn-danger btn-xs"
