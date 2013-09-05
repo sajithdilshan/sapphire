@@ -6,25 +6,27 @@
     %i.icon-refresh
 %div.row
   %br
-%div.row{"id" => "addfeedbutton"}
-  %div.list-group{"id" => "listgroup"}
-    - if @feeditems.nil?
-      %p No subscriptions available
-    - else
-      - @feeditems.each_with_index do |feeditem,index|
-        = link_to feeditem.feed_name , show_feed_list_path(:feed_id => feeditem.id), :class =>"list-group-item", remote: true
-          
+  %div{"id" => "masterfeedcontainer"}
+    %div{"id" => "feedcontainer"}
+      %div.row{"id" => "addfeedbutton"}
+        %div.list-group{"id" => "listgroup"}
+          - if @feeditems.nil?
+            %p No subscriptions available
+          - else
+            - @feeditems.each_with_index do |feeditem,index|
+              = link_to feeditem.feed_name , show_feed_list_path(:feed_id => feeditem.id), :class =>"list-group-item", remote: true
+                
 
-  :javascript
-    $("#listgroup").on("click", "a:not(.active)", function ( event ) {
-      $(".active", event.delegateTarget).removeClass("active");
-      $(this).addClass("active");
-      $(".ajax-progress").show();
-    });
-    $("#btn-refresh-feed").click(function() {
-    // Show Progress Indicator
-    $(".ajax-progress").show();
-    });
+        :javascript
+          $("#listgroup").on("click", "a:not(.active)", function ( event ) {
+            $(".active", event.delegateTarget).removeClass("active");
+            $(this).addClass("active");
+            $(".ajax-progress").show();
+          });
+          $("#btn-refresh-feed").click(function() {
+          // Show Progress Indicator
+          $(".ajax-progress").show();
+          });
 
-      
+        
   

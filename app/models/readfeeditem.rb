@@ -22,6 +22,7 @@ class Readfeeditem < ActiveRecord::Base
     u_feed = Userfeed.find_by_user_id_and_feed_id(user,feed_id)
     new_item = Readfeeditem.create(:user_id => user, :feed_id => feed_id, :feeditem_id => post_id, :userfeed_id => u_feed.id )   
     if new_item.nil?
+      Rails.logger.debug "Error occured while marking post as viewed =>"+"user:"+user.to_s+" feed:"+feed_id.to_s+" post:"+post_id.to_s
       return "Error occured while marking post as viewed"
     else 
       return nil
@@ -42,7 +43,8 @@ class Readfeeditem < ActiveRecord::Base
   def self.mark_as_unread(user,feed_id,post_id)
     delete_item = Readfeeditem.delete_all(:user_id => user, :feed_id => feed_id, :feeditem_id => post_id)
     if delete_item.nil?
-      return "Error occured while marking post and unread."
+      Rails.logger.debug "Error occured while marking post as unread. =>"+"user:"+user.to_s+" feed:"+feed_id.to_s+" post:"+post_id.to_s
+      return "Error occured while marking post as unread."
     else
       return nil
     end

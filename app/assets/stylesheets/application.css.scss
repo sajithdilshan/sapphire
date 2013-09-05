@@ -14,13 +14,20 @@
  */
 
 
-#feedlistcontainer,#feedcontainer{
+#feedlistcontainer{
     height: 600px;
     overflow:auto;
 }
-#masterfeedlistcontainer, #masterfeedcontainer{
+#masterfeedlistcontainer{
     height: 600px;
 }
+#feedcontainer{
+    height: 550px;
+    overflow:auto;
+}
+#masterfeedcontainer{
+    height: 550px;
+    }
 
 #feedcontainer{
     overflow-x: hidden;

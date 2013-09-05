@@ -11,15 +11,6 @@
 					%li
 						%a{:href => '/remove_feed'} Remove feeds
 		-else
-			%li
-				%a{:href => '/'} Home
-			%li.dropdown
-				%a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-					Subscriptions
-					%b.caret
-				%ul.dropdown-menu
-					%li
-						%a{:href => '/'} Home
 
 	- if current_user
 		%ul.nav.navbar-nav{:class =>"pull-right"}

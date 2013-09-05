@@ -90,6 +90,9 @@ GEM
     json (1.7.7)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    logstash-event (1.2.01)
+    logstasher (0.2.8)
+      logstash-event
     loofah (1.2.1)
       nokogiri (>= 1.4.4)
     mail (2.4.4)
@@ -205,6 +208,7 @@ DEPENDENCIES
   haml
   haml-rails
   jquery-rails
+  logstasher
   omniauth-facebook
   pg
   rails (= 3.2.11)
