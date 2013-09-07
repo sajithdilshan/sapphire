@@ -101,6 +101,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.21)
     mini_portile (0.5.1)
+    multi_fetch_fragments (0.0.17)
     multi_json (1.7.9)
     multipart-post (1.2.0)
     nokogiri (1.6.0)
@@ -191,6 +192,7 @@ GEM
     whenever (0.8.4)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
+    will_paginate (3.0.4)
 
 PLATFORMS
   ruby
@@ -209,6 +211,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   logstasher
+  multi_fetch_fragments
   omniauth-facebook
   pg
   rails (= 3.2.11)
@@ -220,3 +223,4 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.0.3)
   whenever
+  will_paginate (~> 3.0)

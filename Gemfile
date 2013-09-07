@@ -47,6 +47,8 @@ gem 'whenever', :require => false
 gem 'delayed_job_active_record'
 gem "daemons"
 gem 'logstasher'
+gem 'multi_fetch_fragments'
+gem 'will_paginate', '~> 3.0'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

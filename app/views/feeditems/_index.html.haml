@@ -2,11 +2,11 @@
   - if @feeditem_list.nil?
     %p no unread item here
   - else
-    - @feeditem_list.each do |feeditem|
-      = render partial: "feeditems/post", locals: {feeditem: feeditem, viewed: false}
+    /- @feeditem_list.each do |feeditem|
+    = render partial: "feeditems/post", locals: {feeditem_lst: @feeditem_list, viewed: false}
 
   - if @readfeeditem_list.nil?
     %p no read item here
   - else
-    - @readfeeditem_list.each_with_index do |feeditem, index|
-      = render partial: "feeditems/post", locals: {feeditem: feeditem, viewed: true}
+    /- @readfeeditem_list.each_with_index do |feeditem, index|
+    = render partial: "feeditems/post", locals: {feeditem_lst: @readfeeditem_list, viewed: true}

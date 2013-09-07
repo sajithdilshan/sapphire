@@ -1,5 +1,4 @@
 class UserfeedsController < ApplicationController
-  before_filter :login_required
   before_filter :prepare_userfeed_form, only: [:index]
 
   def prepare_userfeed_form
@@ -19,8 +18,8 @@ class UserfeedsController < ApplicationController
   end
 
   def remove_feed
-    @userfeed_all = Userfeed.where("user_id"=>current_user.uid)
-    @feedlist_unordered =Feed.getfeedlistUnordered(current_user.uid)
+    @userfeed_all = Userfeed.where("user_id"=>current_user.uid).paginate(:page => params[:page],:per_page => 10)
+    @feedlist_unordered =Feed.getfeedlistUnordered(current_user.uid).paginate(:page => params[:page],:per_page => 10)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @userfeeds }
@@ -29,7 +28,8 @@ class UserfeedsController < ApplicationController
 
   def show_feed_list
     feed_id = params[:feed_id]
-    @feeditem_list, @readfeeditem_list = Feeditem.get_feed_list(current_user.uid,feed_id)
+    @feeditem_list = Feeditem.getUnreadPostList(current_user.uid,feed_id)
+    @readfeeditem_list = Feeditem.getReadPostList(current_user.uid,feed_id)
     @feed_id = feed_id
     if @feeditem_list.nil? and @readfeeditem_list.nil?
       @ajax_status = "Error occured while fetching post list. Please try again..."

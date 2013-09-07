@@ -14,21 +14,13 @@ class Feeditem < ActiveRecord::Base
   # * *Raises* :
   #   None
   #
-  def self.get_feed_list(user_id,feed_id)
-    all_post = Feeditem.find_all_by_feed_id(feed_id)
-    read_posts = Feeditem.joins(:readfeeditems).where("readfeeditems.user_id = (?) AND readfeeditems.feed_id = (?) ",user_id,feed_id)
-    if !read_posts.nil?
-      read_posts_ids = read_posts.map{|x| x.id}
-      unread_posts = all_post.reject{|x| read_posts_ids.include? x.id}
-
-      ordered_unread_post = unread_posts.sort_by{|h| h.post_pub_date}.reverse!
-      ordered_read_post = read_posts.sort_by{|h| h.post_pub_date}.reverse!
-
-      return ordered_unread_post, ordered_read_post
-    else
-      return all_post.sort_by{|h| h.post_pub_date}.reverse!, nil
-    end
-
+  def self.getReadPostList(user_id,feed_id)
+    ordered_read_post = Feeditem.joins(:readfeeditems).where("readfeeditems.user_id = (?) AND readfeeditems.feed_id = (?) ",user_id,feed_id).order("post_pub_date DESC")
   end
 
+  def self.getUnreadPostList(user_id,feed_id)
+    statement = "LEFT OUTER JOIN readfeeditems ON readfeeditems.feeditem_id=feeditems.id and readfeeditems.user_id ="+user_id.to_s
+    ordered_unread_post = Feeditem.joins(statement).where("readfeeditems.id is null and feeditems.feed_id=(?)",feed_id).order("post_pub_date DESC")
+  end
+  
 end

@@ -1,60 +1,61 @@
-- $item_id = feeditem.id
-- $item_title = feeditem.post_title
-- $item_url = feeditem.post_url
-%div.panel.panel-default{"id" => "panel#{$item_id}"}
-  - if viewed
-    %div.panel-heading-read{"id" => "panelhead#{$item_id}"}
-      %h4.panel-title
-        %a.accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#feed#{$item_id}", "id" => "acclink#{$item_id}"}
-          = feeditem.post_title
-  - else 
-    %div.panel-heading{"id" => "panelhead#{$item_id}"}
-      %h4.panel-title
-        %a.accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#feed#{$item_id}", "id" => "acclink#{$item_id}"}
-          = feeditem.post_title
-  %div.panel-collapse.collapse{"id" => "feed#{$item_id}"}
-    %div.panel-body
-      .row{"id" => "posttoolbar"}
-        %div.btn-toolbar.pull-right
-          %div.btn-group
-            %a.btn.btn-default{"id" => "openoriginal","href"=> feeditem.post_url, "target"=>"_blank"}
-              %i.icon-external-link
-            %button.btn.btn-default{"id" => "fullbtn#{$item_id}"}
-              %i.icon-fullscreen 
-          %div.btn-group
-            = link_to "Mark as Unread", mark_feed_unread_path(:feed_id => @feed_id, :post_id => feeditem.id), :type => "button", :id => "btn#{$item_id}",:class =>"btn btn-default", remote: true
-          %div.btn-group
-            %button.btn.btn-default{"type" => "default","onClick" => "window.open('http://www.facebook.com/share.php?u=#{$item_url}','Share on Facebook', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
-              %i.icon-facebook
-            %button.btn.btn-default{"type" => "default","onClick" => "window.open('http://twitter.com/intent/tweet?source=tweetbutton&text=#{$item_title}&url=#{$item_url}', 'Share on Twitter', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
-              %i.icon-twitter
-      .row.post-body{"id" => "postbody#{$item_id}"}
-        - unless feeditem.post_body.nil?
-          %p= feeditem.post_body.html_safe
-          %div.pull-right{"id"=>"published"}
-            %p Published on:
-            %p= feeditem.post_pub_date
-    
-  :javascript
+- feeditem_lst.each do |feeditem|
+  - $item_id = feeditem.id
+  - $item_title = feeditem.post_title
+  - $item_url = feeditem.post_url
+  %div.panel.panel-default{"id" => "panel#{$item_id}"}
+    - if viewed
+      %div.panel-heading-read{"id" => "panelhead#{$item_id}"}
+        %h4.panel-title
+          %a.accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#feed#{$item_id}", "id" => "acclink#{$item_id}"}
+            = feeditem.post_title
+    - else 
+      %div.panel-heading{"id" => "panelhead#{$item_id}"}
+        %h4.panel-title
+          %a.accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#feed#{$item_id}", "id" => "acclink#{$item_id}"}
+            = feeditem.post_title
+    %div.panel-collapse.collapse{"id" => "feed#{$item_id}"}
+      %div.panel-body
+        .row{"id" => "posttoolbar"}
+          %div.btn-toolbar.pull-right
+            %div.btn-group
+              %a.btn.btn-default{"id" => "openoriginal","href"=> feeditem.post_url, "target"=>"_blank"}
+                %i.icon-external-link
+              %button.btn.btn-default{"id" => "fullbtn#{$item_id}"}
+                %i.icon-fullscreen 
+            %div.btn-group
+              = link_to "Mark as Unread", mark_feed_unread_path(:feed_id => @feed_id, :post_id => feeditem.id), :type => "button", :id => "btn#{$item_id}",:class =>"btn btn-default", remote: true
+            %div.btn-group
+              %button.btn.btn-default{"type" => "default","onClick" => "window.open('http://www.facebook.com/share.php?u=#{$item_url}','Share on Facebook', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
+                %i.icon-facebook
+              %button.btn.btn-default{"type" => "default","onClick" => "window.open('http://twitter.com/intent/tweet?source=tweetbutton&text=#{$item_title}&url=#{$item_url}', 'Share on Twitter', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
+                %i.icon-twitter
+        .row.post-body{"id" => "postbody#{$item_id}"}
+          - unless feeditem.post_body.nil?
+            %p= feeditem.post_body.html_safe
+            %div.pull-right{"id"=>"published"}
+              %p Published on:
+              %p= feeditem.post_pub_date
+      
+    :javascript
 
-    $('#acclink#{$item_id}').click(function() { $.get('mark_feed_viewed',{feed_id: #{@feed_id}, post_id: #{$item_id}}); }); 
-    $('#acclink#{$item_id}').click(function() {
-        if($("#panelhead#{$item_id}").hasClass("panel-heading"))
-          $("#panelhead#{$item_id}").removeClass("panel-heading").addClass("panel-heading-read");;                 
-         
-        } ) ;
-    $('#btn#{$item_id}').click(function() { 
-    $('#acclink#{$item_id}').collapse('hide');
-        if($("#panelhead#{$item_id}").hasClass("panel-heading-read"))
-          $("#panelhead#{$item_id}").removeClass("panel-heading-read").addClass("panel-heading");; 
-     });
-    $('#fullbtn#{$item_id}').click(function(e){
-      $('#postbody#{$item_id}').fullScreen(
-        {
-          'background':'#ffffff'
-        });
-      e.preventDefault();
-    });
+      $('#acclink#{$item_id}').click(function() { $.get('mark_feed_viewed',{feed_id: #{@feed_id}, post_id: #{$item_id}}); }); 
+      $('#acclink#{$item_id}').click(function() {
+          if($("#panelhead#{$item_id}").hasClass("panel-heading"))
+            $("#panelhead#{$item_id}").removeClass("panel-heading").addClass("panel-heading-read");;                 
+           
+          } ) ;
+      $('#btn#{$item_id}').click(function() { 
+      $('#acclink#{$item_id}').collapse('hide');
+          if($("#panelhead#{$item_id}").hasClass("panel-heading-read"))
+            $("#panelhead#{$item_id}").removeClass("panel-heading-read").addClass("panel-heading");; 
+       });
+      $('#fullbtn#{$item_id}').click(function(e){
+        $('#postbody#{$item_id}').fullScreen(
+          {
+            'background':'#ffffff'
+          });
+        e.preventDefault();
+      });
 
 
 
