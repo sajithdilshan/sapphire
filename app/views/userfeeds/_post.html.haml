@@ -10,7 +10,7 @@
         .row{"id" => "posttoolbar"}
           %div.btn-toolbar.pull-right
             %div.btn-group
-              = link_to "Mark as unread", mark_feed_unread_path(:feed_id => @feed_id, :post_id => feeditem.id), :type => "button", :id => "btn#{$item_id}",:class =>"btn btn-default", remote: true
+              = link_to "Mark as unread", mark_feed_unread_path(:feed_id => @feed_id, :post_id => feeditem.id), :type => "button", :id => "btn#{$item_id}",:class =>"btn btn-default btn-sm", remote: true
             %div.btn-group
               %button.btn.btn-default{"type" => "default"}
                 %i.icon-facebook

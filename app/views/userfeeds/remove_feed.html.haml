@@ -11,6 +11,6 @@
         %td= @feedlist_unordered[index].feed_name
         %td= feed.category
         %td= feed.created_at
-        %td= button_to "Remove", userfeed_path(feed), :method => :delete, :confirm => "Feed will be removed. Are you sure?", :class => "btn btn-danger btn-xs"
+        %td= button_to 'Remove', userfeed_path(feed), :method => :delete, :confirm => 'Feed will be removed. Are you sure?', :class => 'btn btn-danger btn-xs'
 
-= will_paginate @userfeed_all
+/= will_paginate @userfeed_all

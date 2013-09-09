@@ -2,7 +2,7 @@ require 'time'
 
 class Feed < ActiveRecord::Base
   validates_presence_of :feed_url
-  attr_accessible :feed_name, :feed_url, :lastread, :category, :userfeed_id, :id
+  attr_accessible :feed_name, :feed_url, :id
   has_many :userfeed, :dependent => :destroy
   has_many :readfeeditems, :dependent => :destroy
   has_many :feeditems, :dependent => :destroy
@@ -17,33 +17,31 @@ class Feed < ActiveRecord::Base
   # * *Raises* :
   #   None
   #
-  def self.userFeedUpdate(userid)
-    Rails.logger.info "performing the userfeed update of " + userid.to_s
+  def self.update_user_feeds(userid)
+    Rails.logger.info "performing the userfeed update of #{userid.to_s}"
     #querying the list of feeds of the user
     feeds = Feed.joins(:userfeed).where('userfeeds.user_id' => userid)
-    if feeds.nil?
-      return true
-    end
+    return true if feeds.nil?
 
     #populating a list of feedid and url tuples
     feed_id_list =[]
-    if feeds.class == Array
+    if feeds.class == Array then
       feeds.entries.each do |entry|
-        feed_id_list.append([entry.id,entry.feed_url])
+        feed_id_list.append([entry.id, entry.feed_url])
       end
     else
-        feed_id_list.append([feeds.id,feeds.feed_url])
+      feed_id_list.append([feeds.id, feeds.feed_url])
     end
     
     feed_id_list.each do |id, url|
       #querying the published date of the recent post item
-      last_entry = Feeditem.where("feed_id" => id).first.post_pub_date
+      last_entry = Feeditem.where('feed_id' => id).first.post_pub_date
       #fetching the feed
       fetched_feed = Feedzirra::Feed.fetch_and_parse(url)
       #if fetching feed is sucessful
       unless fetched_feed.nil?
         fetched_feed.entries.each do |entry|
-          postbody = ""
+
           # some feeds puts description in content and others put it in content
           if entry.content.nil?
             postbody = entry.summary
@@ -59,19 +57,6 @@ class Feed < ActiveRecord::Base
     end   #end of feed_id_list loop
   end   #end of userfeedupdate
 
-  # This method checks if a feed exists for a given url
-  #
-  # * *Args*    :
-  #   - +feed_url+ -> The url of the feed.
-  # * *Returns* :
-  #   - Feed if it exists, otherwise returns nil
-  # * *Raises* :
-  #   None
-  #
-  def self.check_if_feed_exists_by_feed_url(feed_url)
-    return Feed.find_by_feed_url(feed_url)
-  end
-
   # This method adds new feeds to the application. If the feed already exists, it just creates a reference to the user.
   #
   # * *Args*    :
@@ -82,9 +67,9 @@ class Feed < ActiveRecord::Base
   # * *Raises* :
   #   None
   #
-  def self.addFeed(f_url, userid)
+  def self.add_feed(f_url, userid)
     #fetching feed from remote server 
-    feed_exist = Feed.check_if_feed_exists_by_feed_url(f_url)
+    feed_exist = Feed.find_by_feed_url(f_url)
     if feed_exist.nil? 
       fetched_feed = Feedzirra::Feed.fetch_and_parse(f_url)  
     else
@@ -92,24 +77,23 @@ class Feed < ActiveRecord::Base
     end
 
     if fetched_feed.nil?
-      return {alert: "Error occured while fetching feed. Please try again later."}
+      return {alert: 'Error occured while fetching feed. Please try again later.'}
     else
       # is_feed_exisits = check_if_feed_exists_by_feed_url(fetched_feed.feed_url)
       if feed_exist
         userfeed_exist = Userfeed.find_by_user_id_and_feed_id(userid, feed_exist.id )
         unless userfeed_exist.nil?
-          return {notice: "You have already added that feed"}
+          return {notice: 'You have already added that feed'}
         end
         feed = feed_exist
       else
 
         feed = Feed.create(:feed_name => fetched_feed.title, :feed_url => fetched_feed.feed_url)
         if feed.nil?
-          return {alert: "Error occured while creating feed. Please try again later."}
+          return {alert: 'Error occured while creating feed. Please try again later.'}
         end
 
         fetched_feed.entries.each do |entry|
-          postbody = ""
           if entry.content.nil?
             postbody = entry.summary
           else
@@ -121,9 +105,9 @@ class Feed < ActiveRecord::Base
       end
       
       user = User.find_by_uid(userid)
-      Userfeed.create(:user_id => user.uid, :category => "default",:lastread => nil, :feed_id => feed.id)
+      Userfeed.create(:user_id => user.uid, :category => 'default',:lastread => nil, :feed_id => feed.id)
 
-      return {notice: "Feed added Successfully"}
+      return {notice: 'Feed added Successfully'}
     end   #end of fetchedfeed.nil?
   end   #end of addfeed method
 
@@ -136,8 +120,8 @@ class Feed < ActiveRecord::Base
   # * *Raises* :
   #   None
   #
-  def self.getUserFeedList(userid)
-    Feed.joins(:userfeed).where('userfeeds.user_id' => userid).order("feed_name ASC")
+  def self.ordered_feed_list(userid)
+    Feed.joins(:userfeed).where('userfeeds.user_id' => userid).order('feed_name ASC')
   end
 
   # This method queries the subscriptions(feeds) for a given user (unordered)
@@ -149,7 +133,7 @@ class Feed < ActiveRecord::Base
   # * *Raises* :
   #   None
   #
-  def self.getfeedlistUnordered(userid)
+  def self.unordered_feed_list(userid)
     Feed.joins(:userfeed).where('userfeeds.user_id' => userid)
   end
 

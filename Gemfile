@@ -5,13 +5,7 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-group :development, :test do
-  gem 'sqlite3'
-end
-
-group :production do
-  gem 'pg'
-end
+gem 'sqlite3'
 
 
 # Gems used only for assets and not required
@@ -32,23 +26,25 @@ group :test do
   gem 'simplecov', :require => false
 end
 
-gem 'font-awesome-sass-rails'
+
 gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
 gem 'omniauth-facebook'
 gem 'figaro'
 gem 'turbolinks'
-gem "bourbon"
+gem 'bourbon'
 gem 'simple_form', "1.5.1"
-gem "curb"
-gem "feedzirra"
+gem 'curb'
+gem 'feedzirra'
 gem 'whenever', :require => false
 gem 'delayed_job_active_record'
-gem "daemons"
+gem 'daemons'
 gem 'logstasher'
 gem 'multi_fetch_fragments'
 gem 'will_paginate', '~> 3.0'
+gem 'font-awesome-sass-rails'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

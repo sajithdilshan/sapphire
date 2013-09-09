@@ -1,9 +1,9 @@
 class UpdateFeed < Struct .new(:userid)
   def perform
-    Feed.userFeedUpdate(userid)
+    Feed.update_user_feeds(userid)
   end
 
-    def max_attempts
-    return 3
+  def max_attempts
+     3
   end
 end
