@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::RoutingError, :with => :render_404
 
-
   private
 
   def render_404

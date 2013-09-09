@@ -21,9 +21,10 @@ group :assets do
 end
 
 group :test do
-	gem "rspec-rails"
+	gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'simplecov', :require => false
+  gem 'debugger'
 end
 
 
