@@ -1,3 +1,19 @@
+require 'simplecov'
+SimpleCov.start do
+  add_filter '/spec/'
+  add_filter '/config/'
+  add_filter '/lib/'
+  add_filter '/vendor/'
+  add_filter '/db/'
+  add_filter '/log/'
+  add_filter '/script/'
+  add_filter '/public/'
+  add_filter '/doc/'
+
+  add_group 'Controllers', 'app/controllers'
+  add_group 'Models', 'app/models'
+end
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
