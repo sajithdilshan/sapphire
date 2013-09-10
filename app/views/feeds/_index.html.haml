@@ -1,20 +1,20 @@
-%div.row{"id" => "addfeedbutton"}
-  %button.btn.btn-primary{"type" => "button", "data-toggle" => "modal", "data-target" => "#addfeedmodel"} 
+%div.row{'id' => 'addfeedbutton'}
+  %button.btn.btn-primary{'type' => 'button', 'data-toggle' => 'modal', 'data-target' => '#addfeedmodel'}
     %i.icon-plus
     New Feed
-  %a.btn.btn-default.pull-right{"href"=> refresh_feed_list_path,"data-remote" => "true","id"=>"btn-refresh-feed"}
+  %a.btn.btn-default.pull-right{'href'=> refresh_feed_list_path,'data-remote' => 'true','id'=>'btn-refresh-feed'}
     %i.icon-refresh
 %div.row
   %br
-  %div{"id" => "masterfeedcontainer"}
-    %div{"id" => "feedcontainer"}
-      %div.row{"id" => "addfeedbutton"}
-        %div.list-group{"id" => "listgroup"}
+  %div{'id' => 'masterfeedcontainer'}
+    %div{'id' => 'feedcontainer'}
+      %div.row{'id' => 'addfeedbutton'}
+        %div.list-group{'id' => 'listgroup'}
           - if @feeditems.nil?
             %p No subscriptions available
           - else
             - @feeditems.each_with_index do |feeditem,index|
-              = link_to feeditem.feed_name , show_feed_list_path(:feed_id => feeditem.id), :class =>"list-group-item", remote: true
+              = link_to feeditem.feed_name , show_feed_list_path(:feed_id => feeditem.id), :class =>'list-group-item', remote: true
                 
 
         :javascript

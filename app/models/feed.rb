@@ -48,10 +48,12 @@ class Feed < ActiveRecord::Base
           if entry.published.to_time > last_entry
             Feeditem.create(:feed_id => id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => postbody, :post_url => entry.url)
           end
-        end   #end of fetched_feed loop
-      end   #end of unless clause
-    end   #end of feed_id_list loop
-  end   #end of userfeedupdate
+        end #end of fetched_feed loop
+      end #end of unless clause
+    end #end of feed_id_list loop
+  end
+
+  #end of userfeedupdate
 
   # This method adds new feeds to the application. If the feed already exists, it just creates a reference to the user.
   #
@@ -66,8 +68,8 @@ class Feed < ActiveRecord::Base
   def self.add_feed(f_url, userid)
     #fetching feed from remote server 
     feed_exist = Feed.find_by_feed_url(f_url)
-    if feed_exist.nil? 
-      fetched_feed = Feedzirra::Feed.fetch_and_parse(f_url)  
+    if feed_exist.nil?
+      fetched_feed = Feedzirra::Feed.fetch_and_parse(f_url)
     else
       fetched_feed = feed_exist
     end
@@ -77,7 +79,7 @@ class Feed < ActiveRecord::Base
     else
       # is_feed_exisits = check_if_feed_exists_by_feed_url(fetched_feed.feed_url)
       if feed_exist
-        userfeed_exist = Userfeed.find_by_user_id_and_feed_id(userid, feed_exist.id )
+        userfeed_exist = Userfeed.find_by_user_id_and_feed_id(userid, feed_exist.id)
         unless userfeed_exist.nil?
           return {notice: 'You have already added that feed'}
         end
@@ -99,13 +101,15 @@ class Feed < ActiveRecord::Base
         end
 
       end
-      
+
       user = User.find_by_uid(userid)
-      Userfeed.create(:user_id => user.uid, :category => 'default',:lastread => nil, :feed_id => feed.id)
+      Userfeed.create(:user_id => user.uid, :category => 'default', :lastread => nil, :feed_id => feed.id)
 
       return {notice: 'Feed added Successfully'}
-    end   #end of fetchedfeed.nil?
-  end   #end of addfeed method
+    end #end of fetchedfeed.nil?
+  end
+
+  #end of addfeed method
 
   # This method queries the subscriptions(feeds) for a given user (ordered)
   #

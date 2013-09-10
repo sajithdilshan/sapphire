@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   before_filter :login_required
 
-
   private
 
   def current_user
@@ -15,9 +14,9 @@ class ApplicationController < ActionController::Base
   end
 
   def login_required
-    unless current_user 
-        flash[:error] = 'You must be logged in to view this page.'  
-        redirect_to root_path
-      end 
+    unless current_user
+      flash[:error] = 'You must be logged in to view this page.'
+      redirect_to root_path
+    end
   end
 end

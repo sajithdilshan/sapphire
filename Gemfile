@@ -42,7 +42,6 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'logstasher'
 gem 'multi_fetch_fragments'
-gem 'will_paginate', '~> 3.0'
 gem 'font-awesome-sass-rails'
 
 

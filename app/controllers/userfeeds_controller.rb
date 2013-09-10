@@ -21,7 +21,7 @@ class UserfeedsController < ApplicationController
 
   def show_feed_list
     feed_id = params[:feed_id]
-    @readfeeditem_list, @feeditem_list = Feeditem.get_all_posts(current_user.uid, feed_id,max_post_size,0)
+    @readfeeditem_list, @feeditem_list = Feeditem.get_all_posts(current_user.uid, feed_id, max_post_size, 0)
     @feed_id = feed_id
     @max_post_size = max_post_size
     if @feeditem_list.nil? and @readfeeditem_list.nil?
@@ -37,14 +37,14 @@ class UserfeedsController < ApplicationController
   def get_unread_posts
     offset = params[:read_page]
     @feed_id = params[:feed_id]
-    @unread_posts = Feeditem.get_unread_post_list(current_user.uid,@feed_id,max_post_size,offset)
+    @unread_posts = Feeditem.get_unread_post_list(current_user.uid, @feed_id, max_post_size, offset)
     @max_post_size = max_post_size
   end
 
   def get_read_posts
     offset = params[:read_page]
     @feed_id = params[:feed_id]
-    @read_posts = Feeditem.get_read_post_list(current_user.uid,@feed_id,max_post_size,offset)
+    @read_posts = Feeditem.get_read_post_list(current_user.uid, @feed_id, max_post_size, offset)
     @max_post_size = max_post_size
   end
 
@@ -52,9 +52,9 @@ class UserfeedsController < ApplicationController
   def mark_feed_viewed
     feed_id = params[:feed_id]
     post_id = params[:post_id]
-    @ajax_status = Readfeeditem.mark_as_viewed(current_user.uid, feed_id,post_id)
+    @ajax_status = Readfeeditem.mark_as_viewed(current_user.uid, feed_id, post_id)
     respond_to do |format|
-      format.js  {render 'shared/ajax-progress'}
+      format.js { render 'shared/ajax-progress' }
     end
 
   end
@@ -62,7 +62,7 @@ class UserfeedsController < ApplicationController
   def mark_feed_unread
     feed_id = params[:feed_id]
     post_id = params[:post_id]
-    @ajax_status = Readfeeditem.mark_as_unread(current_user.uid,feed_id,post_id)
+    @ajax_status = Readfeeditem.mark_as_unread(current_user.uid, feed_id, post_id)
   end
 
 

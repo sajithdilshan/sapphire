@@ -1,39 +1,40 @@
+- #noinspection RubyStringKeysInHashInspection
 - feeditem_lst.each do |feeditem|
   - $item_id = feeditem.id
   - $item_title = feeditem.post_title
   - $item_url = feeditem.post_url
   %div.panel-group{'id' => 'accordion'}
-    %div.panel.panel-default{"id" => "panel#{$item_id}"}
+    %div.panel.panel-default{'id' => "panel#{$item_id}"}
       - if viewed
-        %div.panel-heading-read{"id" => "panelhead#{$item_id}"}
+        %div.panel-heading-read{'id' => "panelhead#{$item_id}"}
           %h4.panel-title
-            %a.accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#feed#{$item_id}", "id" => "acclink#{$item_id}"}
+            %a.accordion-toggle{'data-toggle' => 'collapse', 'data-parent' => '#accordion', 'href' => "#feed#{$item_id}", 'id' => "acclink#{$item_id}"}
               = feeditem.post_title
       - else
         %div.panel-heading{"id" => "panelhead#{$item_id}"}
           %h4.panel-title
-            %a.accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#feed#{$item_id}", "id" => "acclink#{$item_id}"}
+            %a.accordion-toggle{'data-toggle' => 'collapse', 'data-parent' => '#accordion', 'href' => "#feed#{$item_id}", 'id' => "acclink#{$item_id}"}
               = feeditem.post_title
-      %div.panel-collapse.collapse{"id" => "feed#{$item_id}"}
+      %div.panel-collapse.collapse{'id' => "feed#{$item_id}"}
         %div.panel-body
-          .row{"id" => "posttoolbar"}
+          .row{'id' => 'posttoolbar'}
             %div.btn-toolbar
               %div.btn-group
-                %p{"id"=>"published"}= 'Posted on: '+ feeditem.post_pub_date.to_s
+                %p{'id'=>'published'}= 'Posted on: '+ feeditem.post_pub_date.to_s
               %div.btn-group.pull-right
-                %a.btn.btn-default{"id" => "openoriginal","href"=> feeditem.post_url, "target"=>"_blank"}
+                %a.btn.btn-default{'id' => 'openoriginal','href'=> feeditem.post_url, 'target'=>'_blank'}
                   %i.icon-external-link
-                %button.btn.btn-default{"id" => "fullbtn#{$item_id}"}
+                %button.btn.btn-default{'id' => "fullbtn#{$item_id}"}
                   %i.icon-fullscreen
               %div.btn-group.pull-right
-                = link_to "Mark as Unread", mark_feed_unread_path(:feed_id => @feed_id, :post_id => feeditem.id),
-                :type => "button", :id => "btn#{$item_id}",:class =>"btn btn-default btn-sm", remote: true
+                = link_to 'Mark as Unread', mark_feed_unread_path(:feed_id => @feed_id, :post_id => feeditem.id),
+                :type => 'button', :id => "btn#{$item_id}",:class =>'btn btn-default btn-sm', remote: true
               %div.btn-group.pull-right
-                %button.btn.btn-default{"type" => "default","onClick" => "window.open('http://www.facebook.com/share.php?u=#{$item_url}','Share on Facebook', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
+                %button.btn.btn-default{'type' => 'default','onClick' => "window.open('http://www.facebook.com/share.php?u=#{$item_url}','Share on Facebook', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
                   %i.icon-facebook
-                %button.btn.btn-default{"type" => "default","onClick" => "window.open('http://twitter.com/intent/tweet?source=tweetbutton&text=#{$item_title}&url=#{$item_url}', 'Share on Twitter', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
+                %button.btn.btn-default{'type' => 'default','onClick' => "window.open('http://twitter.com/intent/tweet?source=tweetbutton&text=#{$item_title}&url=#{$item_url}', 'Share on Twitter', 'toolbar=no, scrollbars=yes, width=500, height=400');"}
                   %i.icon-twitter
-          .row.post-body{"id" => "postbody#{$item_id}"}
+          .row.post-body{'id' => "postbody#{$item_id}"}
             - unless feeditem.post_body.nil?
               %p= feeditem.post_body.html_safe
 
