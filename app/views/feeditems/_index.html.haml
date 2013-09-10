@@ -7,7 +7,8 @@
     - if @feeditem_list.size < @max_post_size
       :javascript
         $('#btn-unreadposts').hide()
-    %a{'id'=>'btn-unreadposts', 'class' => 'btn btn-default btn-xs'} More Unread Posts
+    %div{'id' => 'btn-unreadposts-container'}
+      %a{'id'=>'btn-unreadposts', 'class' => 'btn btn-default btn-xs'} More Unread Posts
     :javascript
       var unreadpost=0
       $('#btn-unreadposts').click(function() {
@@ -26,7 +27,8 @@
     - if @readfeeditem_list.size < @max_post_size
       :javascript
         $('#btn-readposts').hide()
-    %a{'id'=>'btn-readposts','class' => 'btn btn-default btn-xs'} More Viewed Posts
+    %div{'id' => 'btn-unreadposts-container'}
+      %a{'id'=>'btn-readposts','class' => 'btn btn-default btn-xs'} More Viewed Posts
     :javascript
       var readpost=0
       $('#btn-readposts').click(function() {

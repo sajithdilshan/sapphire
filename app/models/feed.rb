@@ -25,14 +25,11 @@ class Feed < ActiveRecord::Base
 
     #populating a list of feedid and url tuples
     feed_id_list =[]
-    if feeds.class == Array then
-      feeds.entries.each do |entry|
-        feed_id_list.append([entry.id, entry.feed_url])
-      end
-    else
-      feed_id_list.append([feeds.id, feeds.feed_url])
+
+    feeds.entries.each do |entry|
+      feed_id_list.append([entry.id, entry.feed_url])
     end
-    
+
     feed_id_list.each do |id, url|
       #querying the published date of the recent post item
       last_entry = Feeditem.where('feed_id' => id).first.post_pub_date
@@ -41,7 +38,6 @@ class Feed < ActiveRecord::Base
       #if fetching feed is sucessful
       unless fetched_feed.nil?
         fetched_feed.entries.each do |entry|
-
           # some feeds puts description in content and others put it in content
           if entry.content.nil?
             postbody = entry.summary

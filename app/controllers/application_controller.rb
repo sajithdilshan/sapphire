@@ -3,20 +3,15 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   before_filter :login_required
 
-  rescue_from ActionController::RoutingError, :with => :render_404
 
   private
-
-  def render_404
-    render :template => 'error/404.html'
-  end
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
   def max_post_size
-    5
+    10
   end
 
   def login_required

@@ -23,7 +23,9 @@ class SessionsController < ApplicationController
       Delayed::Job.enqueue UpdateFeed.new(current_user.uid)
       redirect_to userfeeds_path
     else
-      raise 'Failed to login'
+      flash[:error] = 'You must be logged in to view this page.'
+      redirect_to root_path
+      #raise 'Failed to login'
     end
   end
 
