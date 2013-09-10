@@ -14,16 +14,22 @@ class Feeditem < ActiveRecord::Base
   # * *Raises* :
   #   None
   #
-  def self.get_read_post_list(user_id,feed_id)
-    Feeditem.joins(:readfeeditems).where('readfeeditems.user_id = (?) AND readfeeditems.feed_id = (?) ',user_id,feed_id).order('post_pub_date DESC')
+  def self.get_read_post_list(user_id,feed_id,limit,offset)
+    Feeditem.joins(:readfeeditems).where('readfeeditems.user_id = (?) AND readfeeditems.feed_id = (?) ',user_id,
+                                         feed_id).order('post_pub_date DESC').limit(limit).offset(offset.to_i*
+                                                                                                  limit.to_i)
   end
 
-  def self.get_unread_post_list(user_id,feed_id)
+  def self.get_unread_post_list(user_id,feed_id,limit,offset)
     statement = "LEFT OUTER JOIN readfeeditems ON readfeeditems.feeditem_id=feeditems.id and readfeeditems.user_id =#{user_id.to_s}"
-    Feeditem.joins(statement).where('readfeeditems.id is null and feeditems.feed_id=(?)',feed_id).order('post_pub_date DESC')
+    Feeditem.joins(statement).where('readfeeditems.id is null and feeditems.feed_id=(?)',
+                                    feed_id).order('post_pub_date DESC').limit(limit).offset(offset.to_i*
+                                                                                                     limit.to_i)
   end
 
-  def self.get_all_posts(user_id,feed_id)
-      return Feeditem.get_read_post_list(user_id,feed_id), Feeditem.get_unread_post_list(user_id,feed_id)
+  def self.get_all_posts(user_id,feed_id,limit,offset)
+      return Feeditem.get_read_post_list(user_id,feed_id,limit,offset), Feeditem.get_unread_post_list(user_id,
+                                                                                                      feed_id,limit,
+                                                                                                      offset)
   end
 end

@@ -15,7 +15,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
 end
@@ -24,7 +24,10 @@ group :test do
 	gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'simplecov', :require => false
-  gem 'debugger'
+
+  gem 'linecache19', '0.5.13'
+  gem 'ruby-debug-base19', '0.11.26'
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 
@@ -35,7 +38,7 @@ gem 'omniauth-facebook'
 gem 'figaro'
 gem 'turbolinks'
 gem 'bourbon'
-gem 'simple_form', "1.5.1"
+gem 'simple_form', '1.5.1'
 gem 'curb'
 gem 'feedzirra'
 gem 'whenever', :require => false
@@ -45,6 +48,7 @@ gem 'logstasher'
 gem 'multi_fetch_fragments'
 gem 'will_paginate', '~> 3.0'
 gem 'font-awesome-sass-rails'
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

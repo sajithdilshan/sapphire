@@ -300,7 +300,7 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "DroidSans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
@@ -462,7 +462,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Droid Sans", Helvetica, Arial, sans-serif;
   font-weight: 500;
   line-height: 1.1;
 }
@@ -5239,6 +5239,8 @@ a.thumbnail:focus {
 .list-group {
   padding-left: 0;
   margin-bottom: 20px;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 14px;
 }
 
 .list-group-item {
@@ -5319,8 +5321,8 @@ a.list-group-item:focus {
   background-color: #ffffff;
   border: 1px solid transparent;
   border-radius: 4px;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  /*-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);*/
+          /*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);*/
 }
 
 .panel-body {

@@ -12,4 +12,6 @@ Sapphire::Application.routes.draw do
   get 'mark_feed_unread', to: 'userfeeds#mark_feed_unread'
   get 'refresh_feed_list', to: 'userfeeds#refresh_feed_list'
   get 'remove_feed', to: 'userfeeds#remove_feed'
+  get 'get_read_posts', to: 'userfeeds#get_read_posts'
+  get 'get_unread_posts', to: 'userfeeds#get_unread_posts'
 end

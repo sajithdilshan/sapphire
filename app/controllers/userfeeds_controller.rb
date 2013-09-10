@@ -21,7 +21,7 @@ class UserfeedsController < ApplicationController
 
   def show_feed_list
     feed_id = params[:feed_id]
-    @readfeeditem_list, @feeditem_list = Feeditem.get_all_posts(current_user.uid, feed_id)
+    @readfeeditem_list, @feeditem_list = Feeditem.get_all_posts(current_user.uid, feed_id,5,0)
     @feed_id = feed_id
 
     if @feeditem_list.nil? and @readfeeditem_list.nil?
@@ -33,6 +33,21 @@ class UserfeedsController < ApplicationController
     end
 
   end
+
+  def get_unread_posts
+    offset = params[:read_page]
+    @feed_id = params[:feed_id]
+    @unread_posts = Feeditem.get_unread_post_list(current_user.uid,@feed_id,5,offset)
+
+  end
+
+  def get_read_posts
+    offset = params[:read_page]
+    @feed_id = params[:feed_id]
+    @read_posts = Feeditem.get_read_post_list(current_user.uid,@feed_id,5,offset)
+
+  end
+
 
   def mark_feed_viewed
     feed_id = params[:feed_id]

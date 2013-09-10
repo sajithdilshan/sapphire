@@ -95,9 +95,9 @@ class Feed < ActiveRecord::Base
 
         fetched_feed.entries.each do |entry|
           if entry.content.nil?
-            postbody = entry.summary
+            postbody = entry.summary.html_safe
           else
-            postbody = entry.content
+            postbody = entry.content.html_safe
           end
           Feeditem.create(:feed_id => feed.id, :post_title => entry.title, :post_pub_date => entry.published, :post_body => postbody, :post_url => entry.url)
         end
