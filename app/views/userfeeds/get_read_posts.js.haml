@@ -1,1 +1,4 @@
+$(".ajax-progress").hide()
+- if @read_posts.size < @max_post_size
+  $("#btn-readposts").hide()
 $('#readpostsconatiner').append("#{j(render('userfeeds/morepost'))}")

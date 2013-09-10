@@ -21,9 +21,9 @@ class UserfeedsController < ApplicationController
 
   def show_feed_list
     feed_id = params[:feed_id]
-    @readfeeditem_list, @feeditem_list = Feeditem.get_all_posts(current_user.uid, feed_id,5,0)
+    @readfeeditem_list, @feeditem_list = Feeditem.get_all_posts(current_user.uid, feed_id,max_post_size,0)
     @feed_id = feed_id
-
+    @max_post_size = max_post_size
     if @feeditem_list.nil? and @readfeeditem_list.nil?
       @ajax_status = 'Error occured while fetching post list. Please try again...'
     end
@@ -37,15 +37,15 @@ class UserfeedsController < ApplicationController
   def get_unread_posts
     offset = params[:read_page]
     @feed_id = params[:feed_id]
-    @unread_posts = Feeditem.get_unread_post_list(current_user.uid,@feed_id,5,offset)
-
+    @unread_posts = Feeditem.get_unread_post_list(current_user.uid,@feed_id,max_post_size,offset)
+    @max_post_size = max_post_size
   end
 
   def get_read_posts
     offset = params[:read_page]
     @feed_id = params[:feed_id]
-    @read_posts = Feeditem.get_read_post_list(current_user.uid,@feed_id,5,offset)
-
+    @read_posts = Feeditem.get_read_post_list(current_user.uid,@feed_id,max_post_size,offset)
+    @max_post_size = max_post_size
   end
 
 

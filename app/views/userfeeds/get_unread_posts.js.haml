@@ -1,1 +1,4 @@
+$(".ajax-progress").hide()
+- if @unread_posts.size < @max_post_size
+  $("#btn-unreadposts").hide()
 $('#unreadpostscontainer').append("#{j(render('userfeeds/moreunreadpost'))}")
