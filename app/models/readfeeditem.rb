@@ -7,12 +7,12 @@ class Readfeeditem < ActiveRecord::Base
   validates_uniqueness_of :feeditem_id, :scope => [:user_id, :feed_id]
   attr_accessible :feed_id, :feeditem_id, :user_id, :userfeed_id
 
-  # This method marks a post item as viewed one.
+  # This method marks a feeditem(post) as viewed one.
   #
   # * *Args*    :
-  #   - +user+ -> user id of the currentlyy logged in user.
-  #   - +feed_id+ -> id of the feed where the post item belongs.
-  #   - +post_id+ -> id of the post item which should be marked as viewed
+  #   - +user+    -> id of the currentlyy logged in user.
+  #   - +feed_id+ -> id of the feed where the feeditem belongs to.
+  #   - +post_id+ -> id of the feeditem which should be marked as viewed
   # * *Returns* :
   #   - An error is action fails, otherwise returns nil
   # * *Raises* :
@@ -29,12 +29,12 @@ class Readfeeditem < ActiveRecord::Base
     end
   end
 
-  # This method marks a post item as not viewed one.
+  # This method marks a feeditem as a unread one.
   #
   # * *Args*    :
-  #   - +user+ -> user id of the currentlyy logged in user.
-  #   - +feed_id+ -> id of the feed where the post item belongs.
-  #   - +post_id+ -> id of the post item which should be marked as unread
+  #   - +user+    -> id of the currentlyy logged in user.
+  #   - +feed_id+ -> id of the feed where the feeditem belongs to.
+  #   - +post_id+ -> id of the feeditem which should be marked as a unread one.l
   # * *Returns* :
   #   - An error is action fails, otherwise returns nil
   # * *Raises* :

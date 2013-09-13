@@ -2,13 +2,13 @@ require 'time'
 
 class Feed < ActiveRecord::Base
   validates_presence_of :feed_url
-  attr_accessible :feed_name, :feed_url, :id
+  attr_accessible :feed_name, :feed_url, :id, :category
   has_many :userfeed, :dependent => :destroy
   has_many :readfeeditems, :dependent => :destroy
   has_many :feeditems, :dependent => :destroy
   validates_uniqueness_of :feed_url
 
-  # This method updates the feed list of a particular user by fetching new posts
+  # This method updates the feed list of a particular user by fetching new posts of that feed.
   #
   # * *Args*    :
   #   - +userid+ -> The user id of the currently logged in user.
@@ -30,7 +30,9 @@ class Feed < ActiveRecord::Base
       feed_id_list.append([entry.id, entry.feed_url])
     end
 
-    feed_id_list.each do |id, url|
+    feed_id_list.each do |entity|
+      id = entity[0]
+      url = entity[1]
       #querying the published date of the recent post item
       last_entry = Feeditem.where('feed_id' => id).first.post_pub_date
       #fetching the feed
@@ -55,17 +57,19 @@ class Feed < ActiveRecord::Base
 
   #end of userfeedupdate
 
-  # This method adds new feeds to the application. If the feed already exists, it just creates a reference to the user.
+  # This method adds a new feed to the application. If the feed already exists, it just creates a reference to the
+  # user by creating a new new entry in userfeeds table.
   #
   # * *Args*    :
-  #   - +f_url+ -> The url of the feed. This can be a link to xml file.
-  #   - +userid+ -> The user id of the currently logged in user.
+  #   - +f_url+     -> The url of the feed. This can be a link to xml file.
+  #   - +userid+    -> The user id of the currently logged in user.
+  #   - +category+  -> Category of the feed.
   # * *Returns* :
   #   - Errors if fetching feed or creation Feed table entry fail. Returns a notice if user tries to add duplicate feed. Otherwise will return a success message
   # * *Raises* :
   #   None
   #
-  def self.add_feed(f_url, userid)
+  def self.add_feed(f_url, userid, category)
     #fetching feed from remote server 
     feed_exist = Feed.find_by_feed_url(f_url)
     if feed_exist.nil?
@@ -103,13 +107,11 @@ class Feed < ActiveRecord::Base
       end
 
       user = User.find_by_uid(userid)
-      Userfeed.create(:user_id => user.uid, :category => 'default', :lastread => nil, :feed_id => feed.id)
+      Userfeed.create(:user_id => user.uid, :category => category, :feed_id => feed.id)
 
       return {notice: 'Feed added Successfully'}
     end #end of fetchedfeed.nil?
   end
-
-  #end of addfeed method
 
   # This method queries the subscriptions(feeds) for a given user (ordered)
   #
