@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(:version => 20130831184401) do
 
   create_table "userfeeds", :force => true do |t|
     t.string   "category"
-    t.datetime "lastread"
     t.string   "user_id"
     t.integer  "feed_id"
     t.datetime "created_at", :null => false

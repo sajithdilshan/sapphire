@@ -1,6 +1,6 @@
 %div.panel-group{'id' => 'accordion'}
   - if @feeditem_list.nil?
-    %p no unread item here
+    %p
   - else
     %div{'id' => 'unreadpostscontainer'}
       = render partial: 'feeditems/post', locals: {feeditem_lst: @feeditem_list, viewed: false}
@@ -20,7 +20,7 @@
 
 
   - if @readfeeditem_list.nil?
-    %p no read item here
+    %p
   - else
     %div{'id' => 'readpostsconatiner'}
       = render partial: 'feeditems/post', locals: {feeditem_lst: @readfeeditem_list, viewed: true}

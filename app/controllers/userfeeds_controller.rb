@@ -4,6 +4,7 @@ class UserfeedsController < ApplicationController
   def prepare_userfeed_form
     @feed = Feed.new
     @feeditems = Feed.ordered_feed_list(current_user.uid)
+    @unread_count_hash = Feeditem.get_unread_post_count(current_user.uid)
   end
 
   def refresh_feed_list

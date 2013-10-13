@@ -7,10 +7,9 @@
       = simple_form_for(@feed, :html => {:class => 'form-horizontal'}) do |f|
         %div.modal-body
           = f.input :feed_url, required: true, label: 'Enter Feed URL', :input_html => { :class => 'form-control' }
+          = f.input :category, required: true, label: 'Feed Category', :input_html => {value: 'default',
+          :class => 'form-control'}
         %div.modal-footer
-          = f.button :submit, 'Add Feed', :class => 'btn-primary form-control' 
-
-
-
+          = f.button :submit, 'Add Feed', :class => 'btn-primary form-control'
 
 

@@ -40,7 +40,7 @@ gem 'feedzirra'
 gem 'whenever', :require => false
 gem 'delayed_job_active_record'
 gem 'daemons'
-gem 'logstasher'
+#gem 'logstasher'
 gem 'multi_fetch_fragments'
 gem 'font-awesome-sass-rails'
 

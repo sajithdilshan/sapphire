@@ -13,12 +13,15 @@
           - if @feeditems.nil?
             %p No subscriptions available
           - else
-            - @feeditems.each_with_index do |feeditem,index|
-              = link_to feeditem.feed_name , show_feed_list_path(:feed_id => feeditem.id), :class =>'list-group-item', remote: true
+            - @feeditems.each do |feeditem|
+              %li.list-group-item
+                = link_to feeditem.feed_name.to_s, show_feed_list_path(:feed_id => feeditem.id), remote: true
+                %span.badge
+                  = @unread_count_hash[feeditem.id].to_s
                 
 
         :javascript
-          $("#listgroup").on("click", "a:not(.active)", function ( event ) {
+          $("#listgroup").on("click", "li:not(.active)", function ( event ) {
             $(".active", event.delegateTarget).removeClass("active");
             $(this).addClass("active");
             $(".ajax-progress").show();

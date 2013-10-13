@@ -11,9 +11,9 @@ class SessionsController < ApplicationController
         :name => auth['info']['name'],
         :profile_pic => auth['info']['image']
     )
-    url = session[:return_to] || root_path
-    session[:return_to] = nil
-    url = root_path if url.eql?('/logout')
+    #url = session[:return_to] || root_path
+    #session[:return_to] = nil
+    #url = root_path if url.eql?('/logout')
 
     if user.save
       session[:user_id] = user.id

@@ -44,10 +44,6 @@ describe Feed do
           @post.stub_chain(:published,:to_time).and_return(2)
         end
 
-        it 'for one Feed' do
-          Feed.stub_chain(:joins,:where).and_return(@fg_feed)
-        end
-
         it 'for an Array of Feed' do
           Feed.stub_chain(:joins,:where).and_return([@fg_feed,@fg_feed])
         end
@@ -59,10 +55,10 @@ describe Feed do
 
       describe 'after creating feed id and url list' do
         before :each do
-          Feed.stub_chain(:joins,:where).and_return(@fg_feed)
+          Feed.stub_chain(:joins,:where).and_return([@fg_feed,@fg_feed])
         end
         it 'should fetch feeds from feedzirra' do
-          Feedzirra::Feed.should_receive(:fetch_and_parse).with('hello world url')
+          Feedzirra::Feed.should_receive(:fetch_and_parse).twice.with('hello world url')
         end
 
         it 'should return if fetched feed is nil' do
@@ -76,7 +72,8 @@ describe Feed do
 
           it 'should create Feeditem if posts are newer than last post in Feeditems' do
             @post.stub_chain(:published,:to_time).and_return(10)
-            Feeditem.should_receive(:create).with(:feed_id => 55, :post_title => 'faketitle', :post_pub_date => 'fakepubdate', :post_body => 'fakecontent', :post_url => 'fakeurl')
+            Feeditem.should_receive(:create).twice.with(:feed_id => 55, :post_title => 'faketitle',
+                                                   :post_pub_date => 'fakepubdate', :post_body => 'fakecontent', :post_url => 'fakeurl')
           end
 
           it 'should not create Feeditem if there are no new posts' do
@@ -110,13 +107,13 @@ describe Feed do
       end
       after :each do
         User.stub(:find_by_uid).and_return(@user)
-        Feed.add_feed('feed_url', 'userid')
+        Feed.add_feed('feed_url', 'userid', 'category')
       end
     end
 
     it 'should return alert if the fectching feed was a failiure' do
       Feedzirra::Feed.stub(:fetch_and_parse).with('feed_url').and_return(nil)
-      Feed.add_feed('feed_url', 'userid').should == {alert: 'Error occured while fetching feed. Please try again later.'}
+      Feed.add_feed('feed_url', 'userid', 'category').should == {alert: 'Error occured while fetching feed. Please try again later.'}
     end
 
     describe 'after sucessfully fetching the feed' do
@@ -131,14 +128,14 @@ describe Feed do
       end
       after :each do
         User.stub(:find_by_uid).and_return(@user)
-        Feed.add_feed('feed_url', 'userid')
+        Feed.add_feed('feed_url', 'userid', 'category')
       end
     end
 
     it 'should return if user tries to add duplicate feed' do
       Feed.stub(:find_by_feed_url).and_return(@fetched_feed)
       Userfeed.stub(:find_by_user_id_and_feed_id).and_return('this is not nil')
-      Feed.add_feed('f_url', 'userid') == {notice: 'You have already added that feed'}
+      Feed.add_feed('f_url', 'userid', 'category') == {notice: 'You have already added that feed'}
     end
 
     describe 'feed exists but userfeed does not exist' do
@@ -151,16 +148,16 @@ describe Feed do
       end
       after :each do
         User.stub(:find_by_uid).and_return(@user)
-        Feed.add_feed('feed_url', 'userid')
+        Feed.add_feed('feed_url', 'userid', 'category')
       end
     end
 
     it 'should create userfeed for current user and return sucess if feed already exists' do
       Feed.stub(:find_by_feed_url).and_return(@fetched_feed)
       Userfeed.stub(:find_by_user_id_and_feed_id).and_return(nil)
-      Userfeed.should_receive(:create).with(:user_id => '11', :category => 'default', :lastread => nil, :feed_id => '5')
+      Userfeed.should_receive(:create).with(:user_id => '11', :category => 'category',:feed_id => '5')
       User.stub(:find_by_uid).and_return(@user)
-      Feed.add_feed('feed_url', 'userid') == {notice: 'Feed added Successfully'}
+      Feed.add_feed('feed_url', 'userid', 'category') == {notice: 'Feed added Successfully'}
     end
 
     describe 'feed is not already there and obviously no user has added it before' do
@@ -177,7 +174,7 @@ describe Feed do
       end
       after :each do
         User.stub(:find_by_uid).and_return(@user)
-        Feed.add_feed('feed_url', 'userid')
+        Feed.add_feed('feed_url', 'userid', 'category')
       end
     end
   
@@ -185,7 +182,7 @@ describe Feed do
       Feed.stub(:find_by_feed_url).and_return(nil)
       Feedzirra::Feed.stub(:fetch_and_parse).with('feed_url').and_return(@fetched_feed)
       Feed.stub(:create).and_return(nil)
-      Feed.add_feed('feed_url', 'userid') == {alert: 'Error occured while creating feed. Please try again later.'}
+      Feed.add_feed('feed_url', 'userid', 'category') == {alert: 'Error occured while creating feed. Please try again later.'}
     end
 
     describe 'after creating new feed and feed entries successfully' do
@@ -197,12 +194,12 @@ describe Feed do
       it 'should find userid of current user' do
         User.should_receive(:find_by_uid).with('userid')
         User.stub(:find_by_uid).and_return(@user)
-        Feed.add_feed('feed_url', 'userid')
+        Feed.add_feed('feed_url', 'userid', 'category')
       end
       it 'shoul create userfeed for current user and return success' do
-        Userfeed.should_receive(:create).with(:user_id => '11', :category => 'default',:lastread => nil, :feed_id => '5')
+        Userfeed.should_receive(:create).with(:user_id => '11', :category => 'category',:feed_id => '5')
         User.stub(:find_by_uid).and_return(@user)
-        Feed.add_feed('feed_url', 'userid') == {notice: 'Feed added Successfully'}
+        Feed.add_feed('feed_url', 'userid', 'category') == {notice: 'Feed added Successfully'}
       end
     end
 
